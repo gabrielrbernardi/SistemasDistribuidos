@@ -19,6 +19,21 @@ class TodoStub(object):
                 request_serializer=grpc__pb2.Item.SerializeToString,
                 response_deserializer=grpc__pb2.Items.FromString,
                 )
+        self.returnItems = channel.unary_unary(
+                '/grpcPackage.Todo/returnItems',
+                request_serializer=grpc__pb2.voidNoParam.SerializeToString,
+                response_deserializer=grpc__pb2.ItemsList.FromString,
+                )
+        self.getUser = channel.unary_unary(
+                '/grpcPackage.Todo/getUser',
+                request_serializer=grpc__pb2.getUserRequest.SerializeToString,
+                response_deserializer=grpc__pb2.Items.FromString,
+                )
+        self.updateUser = channel.unary_unary(
+                '/grpcPackage.Todo/updateUser',
+                request_serializer=grpc__pb2.UpdateUserRequest.SerializeToString,
+                response_deserializer=grpc__pb2.Items.FromString,
+                )
 
 
 class TodoServicer(object):
@@ -30,12 +45,45 @@ class TodoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def returnItems(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def updateUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_TodoServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'createItem': grpc.unary_unary_rpc_method_handler(
                     servicer.createItem,
                     request_deserializer=grpc__pb2.Item.FromString,
+                    response_serializer=grpc__pb2.Items.SerializeToString,
+            ),
+            'returnItems': grpc.unary_unary_rpc_method_handler(
+                    servicer.returnItems,
+                    request_deserializer=grpc__pb2.voidNoParam.FromString,
+                    response_serializer=grpc__pb2.ItemsList.SerializeToString,
+            ),
+            'getUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.getUser,
+                    request_deserializer=grpc__pb2.getUserRequest.FromString,
+                    response_serializer=grpc__pb2.Items.SerializeToString,
+            ),
+            'updateUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.updateUser,
+                    request_deserializer=grpc__pb2.UpdateUserRequest.FromString,
                     response_serializer=grpc__pb2.Items.SerializeToString,
             ),
     }
@@ -61,6 +109,57 @@ class Todo(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/grpcPackage.Todo/createItem',
             grpc__pb2.Item.SerializeToString,
+            grpc__pb2.Items.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def returnItems(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage.Todo/returnItems',
+            grpc__pb2.voidNoParam.SerializeToString,
+            grpc__pb2.ItemsList.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def getUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage.Todo/getUser',
+            grpc__pb2.getUserRequest.SerializeToString,
+            grpc__pb2.Items.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def updateUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage.Todo/updateUser',
+            grpc__pb2.UpdateUserRequest.SerializeToString,
             grpc__pb2.Items.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

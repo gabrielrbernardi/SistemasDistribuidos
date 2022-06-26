@@ -6,6 +6,7 @@ import threading
 import grpc_pb2
 import grpc_pb2_grpc
 
+cacheValues = {}
 
 class Server(grpc_pb2_grpc.TodoServicer):
     def __init__(self):
@@ -14,12 +15,39 @@ class Server(grpc_pb2_grpc.TodoServicer):
 
     def createItem(self, request, context):
         self.id += 1
-        if self.id > 10000:
-            formatValue = time.time() - self.lastPrintTime
-            print(f"10k chamadas em {formatValue} segundos")
-            self.lastPrintTime = time.time()
-            self.id = 0
-        return grpc_pb2.Items(id=request.id + 1)
+        # print(request.payload)
+        cacheValues[self.id] = request.payload
+
+        # if self.id > 10000:
+        #     formatValue = time.time() - self.lastPrintTime
+        #     print(f"10k chamadas em {formatValue} segundos")
+        #     self.lastPrintTime = time.time()
+        # print(cacheValues)
+        return grpc_pb2.Items(id=self.id, payload = request.payload)
+
+    def returnItems(self, request, context):
+        response = (grpc_pb2.Items(id=self.id, payload = str(cacheValues)))
+        print(response)
+        return response
+
+    def getUser(self, request, context):
+        response = grpc_pb2.Item(
+            id=request.id,
+            payload=request.payload
+        )
+        return response
+
+    def updateUser(self, request, context):
+        print(request.id)
+        if(request.id in cacheValues):
+            print("ID existente")
+            print(cacheValues[request.id])
+        else:
+            print("ID inexistente")
+
+        response = (grpc_pb2.Item(id=request.id, payload=str(cacheValues[id])))
+        print(response)
+        return (response)
 
 
 def serve():
@@ -30,7 +58,7 @@ def serve():
     
     try:
         while True:
-            print(f"server na thread: {threading.active_count()}")
+            # print(f"server na thread: {threading.active_count()}")
             time.sleep(10)
     except KeyboardInterrupt:
         print("\nKeyboardInterrupt solicitado pelo usuario")
