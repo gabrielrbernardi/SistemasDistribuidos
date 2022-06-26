@@ -1,0 +1,21 @@
+//python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+
+syntax="proto3";
+
+package grpcPackage;
+
+service Todo {
+    rpc createItem (Item) returns (Items) {}
+    //rpc returnItem (voidNoParam) returns (Items) {}
+}
+
+message voidNoParam {}
+
+message Item {
+    int32 id = 1;
+    //string text = 2;
+}
+
+message Items {
+    int32 id = 1;
+}
