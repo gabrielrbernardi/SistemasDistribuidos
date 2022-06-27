@@ -5,8 +5,12 @@ import threading
 
 import grpc_pb2
 import grpc_pb2_grpc
+import tasks_pb2
+import tasks_pb2_grpc
 
 cacheValues = {}
+
+cacheValuesTask = {}
 
 class Server(grpc_pb2_grpc.TodoServicer):
     def __init__(self):
@@ -62,12 +66,47 @@ class Server(grpc_pb2_grpc.TodoServicer):
         response = grpc_pb2.voidNoParam()
         return response
 
-def serve():
+class ServerTask(tasks_pb2_grpc.TasksServicer):
+    def __init__(self):
+        self.taskId = 0
+    
+    def createTask(self, request, context):
+        self.taskId += 1
+        cacheValuesTask[self.taskId] = request.payload
+
+        return tasks_pb2.Task(id=self.taskId, payload = request.payload)
+
+    def getTask(self, request, context):
+        if(not request.id in cacheValuesTask):
+            response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
+            return response
+        else:
+            response = tasks_pb2.Task(
+                id=request.id,
+                payload=cacheValuesTask[request.id]
+            )
+            return response
+
+
+
+def mainServer():
+    availablePorts = [10000, 10001, 10002, 10003]
+    serve()
+
+def serve(port=10000):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
     grpc_pb2_grpc.add_TodoServicer_to_server(Server(), server)
-    server.add_insecure_port("[::]:10000")
+    tasks_pb2_grpc.add_TasksServicer_to_server(ServerTask(), server)
+    server.add_insecure_port("[::]:" + str(port))
     server.start()
-    
+    print("Server iniciado na porta " + str(port))
+
+    # def createItem(self, request, context):
+    #     self.id += 1
+    #     cacheValues[self.id] = request.payload
+
+    #     return grpc_pb2.Items(id=self.id, payload = request.payload)
+
     try:
         while True:
             # print(f"server na thread: {threading.active_count()}")
@@ -77,5 +116,4 @@ def serve():
         server.stop(0)
 
 if __name__ == "__main__":
-    print("iniciando server")
-    serve()
+    mainServer()
