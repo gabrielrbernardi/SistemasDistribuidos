@@ -14,13 +14,14 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ngrpc.proto\x12\x0bgrpcPackage\"\r\n\x0bvoidNoParam\"0\n\x11UpdateUserRequest\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"\x1c\n\x0egetUserRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"#\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"$\n\x05Items\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"-\n\tItemsList\x12 \n\x05items\x18\x01 \x03(\x0b\x32\x11.grpcPackage.Item2\x82\x02\n\x04Todo\x12\x35\n\ncreateItem\x12\x11.grpcPackage.Item\x1a\x12.grpcPackage.Items\"\x00\x12\x41\n\x0breturnItems\x12\x18.grpcPackage.voidNoParam\x1a\x16.grpcPackage.ItemsList\"\x00\x12<\n\x07getUser\x12\x1b.grpcPackage.getUserRequest\x1a\x12.grpcPackage.Items\"\x00\x12\x42\n\nupdateUser\x12\x1e.grpcPackage.UpdateUserRequest\x1a\x12.grpcPackage.Items\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ngrpc.proto\x12\x0bgrpcPackage\"\r\n\x0bvoidNoParam\"0\n\x11UpdateUserRequest\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"\x1c\n\x0egetUserRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"#\n\x12returnErrorRequest\x12\r\n\x05\x45rror\x18\x01 \x01(\t\"#\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"$\n\x05Items\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"-\n\tItemsList\x12 \n\x05items\x18\x01 \x03(\x0b\x32\x11.grpcPackage.Item2\x80\x03\n\x04Todo\x12\x35\n\ncreateItem\x12\x11.grpcPackage.Item\x1a\x12.grpcPackage.Items\"\x00\x12\x43\n\x0breturnItems\x12\x18.grpcPackage.voidNoParam\x1a\x18.grpcPackage.voidNoParam\"\x00\x12<\n\x07getUser\x12\x1b.grpcPackage.getUserRequest\x1a\x12.grpcPackage.Items\"\x00\x12\x42\n\nupdateUser\x12\x1e.grpcPackage.UpdateUserRequest\x1a\x12.grpcPackage.Items\"\x00\x12\x35\n\ndeleteUser\x12\x11.grpcPackage.Item\x1a\x12.grpcPackage.Items\"\x00\x12\x43\n\x0breturnError\x12\x18.grpcPackage.voidNoParam\x1a\x18.grpcPackage.voidNoParam\"\x00\x62\x06proto3')
 
 
 
 _VOIDNOPARAM = DESCRIPTOR.message_types_by_name['voidNoParam']
 _UPDATEUSERREQUEST = DESCRIPTOR.message_types_by_name['UpdateUserRequest']
 _GETUSERREQUEST = DESCRIPTOR.message_types_by_name['getUserRequest']
+_RETURNERRORREQUEST = DESCRIPTOR.message_types_by_name['returnErrorRequest']
 _ITEM = DESCRIPTOR.message_types_by_name['Item']
 _ITEMS = DESCRIPTOR.message_types_by_name['Items']
 _ITEMSLIST = DESCRIPTOR.message_types_by_name['ItemsList']
@@ -44,6 +45,13 @@ getUserRequest = _reflection.GeneratedProtocolMessageType('getUserRequest', (_me
   # @@protoc_insertion_point(class_scope:grpcPackage.getUserRequest)
   })
 _sym_db.RegisterMessage(getUserRequest)
+
+returnErrorRequest = _reflection.GeneratedProtocolMessageType('returnErrorRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RETURNERRORREQUEST,
+  '__module__' : 'grpc_pb2'
+  # @@protoc_insertion_point(class_scope:grpcPackage.returnErrorRequest)
+  })
+_sym_db.RegisterMessage(returnErrorRequest)
 
 Item = _reflection.GeneratedProtocolMessageType('Item', (_message.Message,), {
   'DESCRIPTOR' : _ITEM,
@@ -76,12 +84,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UPDATEUSERREQUEST._serialized_end=90
   _GETUSERREQUEST._serialized_start=92
   _GETUSERREQUEST._serialized_end=120
-  _ITEM._serialized_start=122
-  _ITEM._serialized_end=157
-  _ITEMS._serialized_start=159
-  _ITEMS._serialized_end=195
-  _ITEMSLIST._serialized_start=197
-  _ITEMSLIST._serialized_end=242
-  _TODO._serialized_start=245
-  _TODO._serialized_end=503
+  _RETURNERRORREQUEST._serialized_start=122
+  _RETURNERRORREQUEST._serialized_end=157
+  _ITEM._serialized_start=159
+  _ITEM._serialized_end=194
+  _ITEMS._serialized_start=196
+  _ITEMS._serialized_end=232
+  _ITEMSLIST._serialized_start=234
+  _ITEMSLIST._serialized_end=279
+  _TODO._serialized_start=282
+  _TODO._serialized_end=666
 # @@protoc_insertion_point(module_scope)

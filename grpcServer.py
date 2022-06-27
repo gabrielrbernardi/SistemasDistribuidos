@@ -15,40 +15,52 @@ class Server(grpc_pb2_grpc.TodoServicer):
 
     def createItem(self, request, context):
         self.id += 1
-        # print(request.payload)
         cacheValues[self.id] = request.payload
 
-        # if self.id > 10000:
-        #     formatValue = time.time() - self.lastPrintTime
-        #     print(f"10k chamadas em {formatValue} segundos")
-        #     self.lastPrintTime = time.time()
-        # print(cacheValues)
         return grpc_pb2.Items(id=self.id, payload = request.payload)
 
     def returnItems(self, request, context):
-        response = (grpc_pb2.Items(id=self.id, payload = str(cacheValues)))
-        print(response)
-        return response
+        itemsList = []
+        for i in cacheValues:
+            tempValueDict = (i, str(cacheValues.get(i)))
+            itemsList.append(tempValueDict)
+
+        print("\n")
+        print(itemsList)
+        return 
 
     def getUser(self, request, context):
-        response = grpc_pb2.Item(
-            id=request.id,
-            payload=request.payload
-        )
-        return response
+        if(not request.id in cacheValues):
+            response = grpc_pb2.returnErrorRequest(Error="Usuario nao encontrado")
+            return response
+        else:
+            response = grpc_pb2.Item(
+                id=request.id,
+                payload=cacheValues[request.id]
+            )
+            return response
 
     def updateUser(self, request, context):
         print(request.id)
         if(request.id in cacheValues):
             print("ID existente")
+            cacheValues[request.id] = request.payload
             print(cacheValues[request.id])
         else:
             print("ID inexistente")
 
-        response = (grpc_pb2.Item(id=request.id, payload=str(cacheValues[id])))
+        response = grpc_pb2.UpdateUserRequest(id=request.id, payload=str(cacheValues[request.id]))
         print(response)
         return (response)
 
+    def deleteUser(self, request, context):
+        print(request)
+        print(cacheValues)
+        cacheValues.pop(request.id)
+        print(cacheValues)
+
+        response = grpc_pb2.voidNoParam()
+        return response
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))

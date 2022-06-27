@@ -6,9 +6,11 @@ package grpcPackage;
 
 service Todo {
     rpc createItem (Item) returns (Items) {}
-    rpc returnItems (voidNoParam) returns (ItemsList) {}
+    rpc returnItems (voidNoParam) returns (voidNoParam) {}
     rpc getUser (getUserRequest) returns (Items) {}
     rpc updateUser (UpdateUserRequest) returns (Items) {}
+    rpc deleteUser (Item) returns (Items) {}
+    rpc returnError (voidNoParam) returns (voidNoParam) {}
 }
 
 message voidNoParam {}
@@ -20,6 +22,10 @@ message UpdateUserRequest {
 
 message getUserRequest {
     int64 id = 1;
+}
+
+message returnErrorRequest {
+    string Error = 1;
 }
 
 message Item {
