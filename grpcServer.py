@@ -31,7 +31,7 @@ class Server(grpc_pb2_grpc.TodoServicer):
 
         print("\n")
         print(itemsList)
-        return 
+        return grpc_pb2.ItemsList
 
     def getUser(self, request, context):
         if(not request.id in cacheValues):
@@ -87,7 +87,25 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
             )
             return response
 
+    # def getTasks(self, request, context):
+    #     taskListVar = tasks_pb2.TasksList()
 
+    #     lista = []
+
+    #     # print(request)
+
+    #     for i in cacheValuesTask:
+    #         dicionario = cacheValuesTask[i]
+    #         if ("cid\': " + str(request.id) in cacheValuesTask[i]):
+                
+    #             print(cacheValuesTask[i])
+
+    #     for req in request:
+    #         print(req)
+    #         taskListVar.request.append(req)
+    #     return taskListVar
+
+# cid\': 1
 
 def mainServer():
     availablePorts = [10000, 10001, 10002, 10003]

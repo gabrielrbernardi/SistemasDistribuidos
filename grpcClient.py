@@ -50,7 +50,7 @@ class GrpcClient:
     def userActionClient(self):
         print("MENU Client".center(50, "="))
         print(" 1 - Criar tarefa")
-        # print(" 2 - Retornar usuarios")
+        print(" 2 - Retornar tarefas")
         print(" 3 - Retornar tarefa especifica")
         # print(" 4 - Atualizar usuario")
         # print(" 5 - Remover usuario")
@@ -58,8 +58,8 @@ class GrpcClient:
         choose = int(input("Digite o numero da opcao: "))
         if(choose == 1):
             self.createTask()
-        # elif(choose == 2):
-        #     self.getUsers()
+        elif(choose == 2):
+            self.getTasks()
         elif choose == 3:
             self.getTask()
         # elif choose == 4:creteTask
@@ -173,6 +173,28 @@ class GrpcClient:
         except Exception:
             print("deu erro na visualizacao geral")
 
+    def getTasks(self, id0 = 0):
+        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+            stub = tasks_pb2_grpc.TasksStub(channel)
+
+            task = tasks_pb2.getAllTasksByUser(idUsuario=1)
+
+            response01 = stub.getTasks(task)
+
+            print(response01)
+
+            # if not id0:
+            #     id0 = int(input("Digite o id da tarefa: "))
+
+            # message = tasks_pb2.getTaskRequest(id=id0)
+            # response = stub.getTask(message)
+            # if response.id != 0:
+            #     print("Tarefa buscada")
+            #     # print(response)
+            #     print(response)
+            #     return response
+            # else:
+            #     print("Tarefa nao encontrada")
     ######### Update method #########
     def updateUser(self):
         idInput = int(input("Digite o ID do usuario a ser atualizado: "))

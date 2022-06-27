@@ -14,13 +14,14 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btasks.proto\x12\x0cgrpcPackage1\"\r\n\x0bvoidNoParam\"0\n\x11UpdateTaskRequest\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"\x1c\n\x0egetTaskRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"#\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\".\n\tTasksList\x12!\n\x05tasks\x18\x01 \x03(\x0b\x32\x12.grpcPackage1.Task\"#\n\x12returnErrorRequest\x12\r\n\x05\x45rror\x18\x01 \x01(\t2\x88\x03\n\x05Tasks\x12\x36\n\ncreateTask\x12\x12.grpcPackage1.Task\x1a\x12.grpcPackage1.Task\"\x00\x12\x44\n\nreturnTask\x12\x19.grpcPackage1.voidNoParam\x1a\x19.grpcPackage1.voidNoParam\"\x00\x12=\n\x07getTask\x12\x1c.grpcPackage1.getTaskRequest\x1a\x12.grpcPackage1.Task\"\x00\x12\x43\n\nupdateTask\x12\x1f.grpcPackage1.UpdateTaskRequest\x1a\x12.grpcPackage1.Task\"\x00\x12\x36\n\ndeleteTask\x12\x12.grpcPackage1.Task\x1a\x12.grpcPackage1.Task\"\x00\x12\x45\n\x0breturnError\x12\x19.grpcPackage1.voidNoParam\x1a\x19.grpcPackage1.voidNoParam\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0btasks.proto\x12\x0cgrpcPackage1\"\r\n\x0bvoidNoParam\"0\n\x11UpdateTaskRequest\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\"\x1c\n\x0egetTaskRequest\x12\n\n\x02id\x18\x01 \x01(\x03\"2\n\x11getAllTasksByUser\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\tidUsuario\x18\x02 \x01(\x03\"#\n\x04Task\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0f\n\x07payload\x18\x02 \x01(\t\".\n\tTasksList\x12!\n\x05tasks\x18\x01 \x03(\x0b\x32\x12.grpcPackage1.Task\"#\n\x12returnErrorRequest\x12\r\n\x05\x45rror\x18\x01 \x01(\t2\xd0\x03\n\x05Tasks\x12\x36\n\ncreateTask\x12\x12.grpcPackage1.Task\x1a\x12.grpcPackage1.Task\"\x00\x12\x44\n\nreturnTask\x12\x19.grpcPackage1.voidNoParam\x1a\x19.grpcPackage1.voidNoParam\"\x00\x12=\n\x07getTask\x12\x1c.grpcPackage1.getTaskRequest\x1a\x12.grpcPackage1.Task\"\x00\x12\x46\n\x08getTasks\x12\x1f.grpcPackage1.getAllTasksByUser\x1a\x17.grpcPackage1.TasksList\"\x00\x12\x43\n\nupdateTask\x12\x1f.grpcPackage1.UpdateTaskRequest\x1a\x12.grpcPackage1.Task\"\x00\x12\x36\n\ndeleteTask\x12\x12.grpcPackage1.Task\x1a\x12.grpcPackage1.Task\"\x00\x12\x45\n\x0breturnError\x12\x19.grpcPackage1.voidNoParam\x1a\x19.grpcPackage1.voidNoParam\"\x00\x62\x06proto3')
 
 
 
 _VOIDNOPARAM = DESCRIPTOR.message_types_by_name['voidNoParam']
 _UPDATETASKREQUEST = DESCRIPTOR.message_types_by_name['UpdateTaskRequest']
 _GETTASKREQUEST = DESCRIPTOR.message_types_by_name['getTaskRequest']
+_GETALLTASKSBYUSER = DESCRIPTOR.message_types_by_name['getAllTasksByUser']
 _TASK = DESCRIPTOR.message_types_by_name['Task']
 _TASKSLIST = DESCRIPTOR.message_types_by_name['TasksList']
 _RETURNERRORREQUEST = DESCRIPTOR.message_types_by_name['returnErrorRequest']
@@ -44,6 +45,13 @@ getTaskRequest = _reflection.GeneratedProtocolMessageType('getTaskRequest', (_me
   # @@protoc_insertion_point(class_scope:grpcPackage1.getTaskRequest)
   })
 _sym_db.RegisterMessage(getTaskRequest)
+
+getAllTasksByUser = _reflection.GeneratedProtocolMessageType('getAllTasksByUser', (_message.Message,), {
+  'DESCRIPTOR' : _GETALLTASKSBYUSER,
+  '__module__' : 'tasks_pb2'
+  # @@protoc_insertion_point(class_scope:grpcPackage1.getAllTasksByUser)
+  })
+_sym_db.RegisterMessage(getAllTasksByUser)
 
 Task = _reflection.GeneratedProtocolMessageType('Task', (_message.Message,), {
   'DESCRIPTOR' : _TASK,
@@ -76,12 +84,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UPDATETASKREQUEST._serialized_end=92
   _GETTASKREQUEST._serialized_start=94
   _GETTASKREQUEST._serialized_end=122
-  _TASK._serialized_start=124
-  _TASK._serialized_end=159
-  _TASKSLIST._serialized_start=161
-  _TASKSLIST._serialized_end=207
-  _RETURNERRORREQUEST._serialized_start=209
-  _RETURNERRORREQUEST._serialized_end=244
-  _TASKS._serialized_start=247
-  _TASKS._serialized_end=639
+  _GETALLTASKSBYUSER._serialized_start=124
+  _GETALLTASKSBYUSER._serialized_end=174
+  _TASK._serialized_start=176
+  _TASK._serialized_end=211
+  _TASKSLIST._serialized_start=213
+  _TASKSLIST._serialized_end=259
+  _RETURNERRORREQUEST._serialized_start=261
+  _RETURNERRORREQUEST._serialized_end=296
+  _TASKS._serialized_start=299
+  _TASKS._serialized_end=763
 # @@protoc_insertion_point(module_scope)
