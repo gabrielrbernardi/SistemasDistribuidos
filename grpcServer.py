@@ -23,15 +23,13 @@ class Server(grpc_pb2_grpc.TodoServicer):
 
         return grpc_pb2.Items(id=self.id, payload = request.payload)
 
-    def returnItems(self, request, context):
-        itemsList = []
+    def returnItems(self, request, context):   
+        il = grpc_pb2.ItemsList()
+        
         for i in cacheValues:
-            tempValueDict = (i, str(cacheValues.get(i)))
-            itemsList.append(tempValueDict)
+            il.items.append(grpc_pb2.Item(id=i, payload=cacheValues[i]))
 
-        print("\n")
-        print(itemsList)
-        return grpc_pb2.ItemsList
+        return il
 
     def getUser(self, request, context):
         if(not request.id in cacheValues):
@@ -45,7 +43,6 @@ class Server(grpc_pb2_grpc.TodoServicer):
             return response
 
     def updateUser(self, request, context):
-        print(request.id)
         if(request.id in cacheValues):
             print("ID existente")
             cacheValues[request.id] = request.payload
@@ -54,14 +51,11 @@ class Server(grpc_pb2_grpc.TodoServicer):
             print("ID inexistente")
 
         response = grpc_pb2.UpdateUserRequest(id=request.id, payload=str(cacheValues[request.id]))
-        print(response)
+
         return (response)
 
     def deleteUser(self, request, context):
-        print(request)
-        print(cacheValues)
         cacheValues.pop(request.id)
-        print(cacheValues)
 
         response = grpc_pb2.voidNoParam()
         return response
@@ -76,34 +70,54 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
 
         return tasks_pb2.Task(id=self.taskId, payload = request.payload)
 
+    def returnItems(self, request, context):   
+        il = grpc_pb2.ItemsList()
+        
+        for i in cacheValuesTask:
+            il.items.append(grpc_pb2.Item(id=i, payload=cacheValues[i]))
+
+        return il
+    
     def getTask(self, request, context):
         if(not request.id in cacheValuesTask):
+            print("deu erro aqui")
             response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
             return response
         else:
-            response = tasks_pb2.Task(
-                id=request.id,
-                payload=cacheValuesTask[request.id]
-            )
+            it = tasks_pb2.TasksList()
+
+            it.tasks.append(tasks_pb2.Task(id = request.id, payload = cacheValuesTask[request.id]))
+            # print("entrou aqui")
+            return it
+
+    def getTasks(self, request, context):
+        if(not request.idUsuario in cacheValuesTask):
+            print("deu erro aqui")
+            response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
             return response
+        else:
+            it = tasks_pb2.TasksList()
 
-    # def getTasks(self, request, context):
-    #     taskListVar = tasks_pb2.TasksList()
+            for i in cacheValuesTask:
+                it.tasks.append(tasks_pb2.Task(id = i, payload = cacheValuesTask[i]))
+            print("entrou aqui")
+            return it
+    
+    def getTasksByUser(self, request, context):
+        if(not request.idUsuario in cacheValuesTask):
+            print("deu erro aqui")
+            response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
+            return response
+        else:
+            it = tasks_pb2.TasksList()
 
-    #     lista = []
-
-    #     # print(request)
-
-    #     for i in cacheValuesTask:
-    #         dicionario = cacheValuesTask[i]
-    #         if ("cid\': " + str(request.id) in cacheValuesTask[i]):
-                
-    #             print(cacheValuesTask[i])
-
-    #     for req in request:
-    #         print(req)
-    #         taskListVar.request.append(req)
-    #     return taskListVar
+            for i in cacheValuesTask:
+                tempStr = cacheValuesTask[i].partition(", 'titulo'")
+                tempStr = tempStr[0].replace("{'cid': ", "")
+                userId = int(tempStr)
+                if(userId == request.idUsuario):
+                    it.tasks.append(tasks_pb2.Task(id = i, payload = cacheValuesTask[i]))
+            return it
 
 # cid\': 1
 

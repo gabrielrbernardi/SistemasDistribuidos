@@ -27,10 +27,15 @@ class TasksStub(object):
         self.getTask = channel.unary_unary(
                 '/grpcPackage1.Tasks/getTask',
                 request_serializer=tasks__pb2.getTaskRequest.SerializeToString,
-                response_deserializer=tasks__pb2.Task.FromString,
+                response_deserializer=tasks__pb2.TasksList.FromString,
                 )
         self.getTasks = channel.unary_unary(
                 '/grpcPackage1.Tasks/getTasks',
+                request_serializer=tasks__pb2.getAllTasksByUser.SerializeToString,
+                response_deserializer=tasks__pb2.TasksList.FromString,
+                )
+        self.getTasksByUser = channel.unary_unary(
+                '/grpcPackage1.Tasks/getTasksByUser',
                 request_serializer=tasks__pb2.getAllTasksByUser.SerializeToString,
                 response_deserializer=tasks__pb2.TasksList.FromString,
                 )
@@ -78,6 +83,12 @@ class TasksServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def getTasksByUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def updateTask(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -112,10 +123,15 @@ def add_TasksServicer_to_server(servicer, server):
             'getTask': grpc.unary_unary_rpc_method_handler(
                     servicer.getTask,
                     request_deserializer=tasks__pb2.getTaskRequest.FromString,
-                    response_serializer=tasks__pb2.Task.SerializeToString,
+                    response_serializer=tasks__pb2.TasksList.SerializeToString,
             ),
             'getTasks': grpc.unary_unary_rpc_method_handler(
                     servicer.getTasks,
+                    request_deserializer=tasks__pb2.getAllTasksByUser.FromString,
+                    response_serializer=tasks__pb2.TasksList.SerializeToString,
+            ),
+            'getTasksByUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.getTasksByUser,
                     request_deserializer=tasks__pb2.getAllTasksByUser.FromString,
                     response_serializer=tasks__pb2.TasksList.SerializeToString,
             ),
@@ -191,7 +207,7 @@ class Tasks(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/getTask',
             tasks__pb2.getTaskRequest.SerializeToString,
-            tasks__pb2.Task.FromString,
+            tasks__pb2.TasksList.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -207,6 +223,23 @@ class Tasks(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/getTasks',
+            tasks__pb2.getAllTasksByUser.SerializeToString,
+            tasks__pb2.TasksList.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def getTasksByUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/getTasksByUser',
             tasks__pb2.getAllTasksByUser.SerializeToString,
             tasks__pb2.TasksList.FromString,
             options, channel_credentials,

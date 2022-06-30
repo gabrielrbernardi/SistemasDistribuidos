@@ -14,10 +14,11 @@ class GrpcClient:
         self.port = port
 
     def userType(self):
+        print("\n" * 50)
         print("TIPO USUARIO".center(50, "="))
         print("1 - Administrador")
         print("2 - Cliente")
-        choose = int(input("Escolha o tipo de usuario:"))
+        choose = int(input("Escolha o tipo de usuario: "))
         return choose
 
 
@@ -28,6 +29,7 @@ class GrpcClient:
         print(" 3 - Retornar usuario especifico")
         print(" 4 - Atualizar usuario")
         print(" 5 - Remover usuario")
+        print(" 8 - Menu anterior")
         print(" 9 - Finalizar client")
         choose = int(input("Digite o numero da opcao: "))
         if(choose == 1):
@@ -41,6 +43,8 @@ class GrpcClient:
         elif choose == 5:
             self.deleteUser()
 
+        elif choose == 8:
+            self.run()
         elif choose == 9:
             print("Encerrando client")
             exit()
@@ -52,9 +56,11 @@ class GrpcClient:
         print(" 1 - Criar tarefa")
         print(" 2 - Retornar tarefas")
         print(" 3 - Retornar tarefa especifica")
+        print(" 4 - Retornar tarefas por usuario")
         # print(" 4 - Atualizar usuario")
         # print(" 5 - Remover usuario")
-        # print(" 9 - Finalizar client")
+        print(" 8 - Menu anterior")
+        print(" 9 - Finalizar client")
         choose = int(input("Digite o numero da opcao: "))
         if(choose == 1):
             self.createTask()
@@ -62,11 +68,15 @@ class GrpcClient:
             self.getTasks()
         elif choose == 3:
             self.getTask()
+        elif choose == 4:
+            self.getTasksByUser()
         # elif choose == 4:creteTask
         #     self.updateUser()
         # elif choose == 5:
         #     self.deleteUser()
 
+        elif choose == 8:
+            self.run()
         elif choose == 9:
             print("Encerrando client")
             exit()
@@ -139,7 +149,7 @@ class GrpcClient:
             response = stub.getUser(message)
             if response.id != 0:
                 print("Usuario buscado")
-                # print(response)
+                print(response)
                 return response
             else:
                 print("Usuario nao encontrado")
@@ -151,38 +161,53 @@ class GrpcClient:
             if not id0:
                 id0 = int(input("Digite o id da tarefa: "))
 
-            message = tasks_pb2.getTaskRequest(id=id0)
-            response = stub.getTask(message)
-            if response.id != 0:
-                print("Tarefa buscada")
-                # print(response)
-                print(response)
-                return response
-            else:
-                print("Tarefa nao encontrada")
-
-
+            # message = tasks_pb2.getTaskRequest(id=id0)
+            # response = stub.getTasks(message)
+            # print(response.tasks.pop())
+    # try:
+            response = stub.getTask(tasks_pb2.getTaskRequest(id = id0))
+            print()
+            print(response)
+            # if response.id != 0:
+            #     print("Tarefa buscada")
+            #     return response
+            # else:
+            #     print("Tarefa nao encontrada")
 
     def getUsers(self):
         try:
             with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
                 stub = grpc_pb2_grpc.TodoStub(channel)
                 message = grpc_pb2.voidNoParam()
-                stub.returnItems(message)
-                # print(response)
+                response = stub.returnItems(message)
+                print("\n")
+                print(response)
         except Exception:
             print("deu erro na visualizacao geral")
 
-    def getTasks(self, id0 = 0):
+    def getTasks(self, id0 = 1):
+        # try:
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = tasks_pb2_grpc.TasksStub(channel)
+
+                response = stub.getTasks(tasks_pb2.getAllTasksByUser(idUsuario = id0))
+                print(response)
+    
+    def getTasksByUser(self, id0 = 0):
         with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
             stub = tasks_pb2_grpc.TasksStub(channel)
 
-            task = tasks_pb2.getAllTasksByUser(idUsuario=1)
+            if not id0:
+                id0 = int(input("Digite o id da tarefa: "))
 
-            response01 = stub.getTasks(task)
-
-            print(response01)
-
+            # message = tasks_pb2.getAllTasksByUser(id=id0)
+            # response = stub.getTasks(message)
+            # print(response.tasks.pop())
+    # try:
+            response = stub.getTasksByUser(tasks_pb2.getAllTasksByUser(idUsuario = id0))
+            print(response)
+        # except:
+        #     print("error!")
             # if not id0:
             #     id0 = int(input("Digite o id da tarefa: "))
 

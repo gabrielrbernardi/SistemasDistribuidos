@@ -22,7 +22,7 @@ class TodoStub(object):
         self.returnItems = channel.unary_unary(
                 '/grpcPackage.Todo/returnItems',
                 request_serializer=grpc__pb2.voidNoParam.SerializeToString,
-                response_deserializer=grpc__pb2.voidNoParam.FromString,
+                response_deserializer=grpc__pb2.ItemsList.FromString,
                 )
         self.getUser = channel.unary_unary(
                 '/grpcPackage.Todo/getUser',
@@ -96,7 +96,7 @@ def add_TodoServicer_to_server(servicer, server):
             'returnItems': grpc.unary_unary_rpc_method_handler(
                     servicer.returnItems,
                     request_deserializer=grpc__pb2.voidNoParam.FromString,
-                    response_serializer=grpc__pb2.voidNoParam.SerializeToString,
+                    response_serializer=grpc__pb2.ItemsList.SerializeToString,
             ),
             'getUser': grpc.unary_unary_rpc_method_handler(
                     servicer.getUser,
@@ -158,7 +158,7 @@ class Todo(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/grpcPackage.Todo/returnItems',
             grpc__pb2.voidNoParam.SerializeToString,
-            grpc__pb2.voidNoParam.FromString,
+            grpc__pb2.ItemsList.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

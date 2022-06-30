@@ -6,7 +6,7 @@ package grpcPackage;
 
 service Todo {
     rpc createItem (Item) returns (Items) {}
-    rpc returnItems (voidNoParam) returns (voidNoParam) {}
+    rpc returnItems (voidNoParam) returns (ItemsList) {}
     rpc getUser (getUserRequest) returns (Items) {}
     rpc updateUser (UpdateUserRequest) returns (Items) {}
     rpc deleteUser (Item) returns (Items) {}

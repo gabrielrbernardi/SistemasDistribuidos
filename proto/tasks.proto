@@ -7,8 +7,9 @@ package grpcPackage1;
 service Tasks {
     rpc createTask (Task) returns (Task) {}
     rpc returnTask (voidNoParam) returns (voidNoParam) {}
-    rpc getTask (getTaskRequest) returns (Task) {}
+    rpc getTask (getTaskRequest) returns (TasksList) {}
     rpc getTasks (getAllTasksByUser) returns (TasksList) {}
+    rpc getTasksByUser (getAllTasksByUser) returns (TasksList) {}
     rpc updateTask (UpdateTaskRequest) returns (Task) {}
     rpc deleteTask (Task) returns (Task) {}
     rpc returnError (voidNoParam) returns (voidNoParam) {}
