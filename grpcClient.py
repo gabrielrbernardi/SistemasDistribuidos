@@ -54,10 +54,10 @@ class GrpcClient:
     def userActionClient(self):
         print("MENU Client".center(50, "="))
         print(" 1 - Criar tarefa")
-        print(" 2 - Retornar tarefas")
-        print(" 3 - Retornar tarefa especifica")
-        print(" 4 - Retornar tarefas por usuario")
-        # print(" 4 - Atualizar usuario")
+        print(" 2 - Retornar todas as tarefas")
+        print(" 3 - Retornar tarefa especifica por ID")
+        print(" 4 - Retornar todas tarefas de um usuario")
+        print(" 5 - Atualizar tarefa")
         # print(" 5 - Remover usuario")
         print(" 8 - Menu anterior")
         print(" 9 - Finalizar client")
@@ -70,8 +70,8 @@ class GrpcClient:
             self.getTask()
         elif choose == 4:
             self.getTasksByUser()
-        # elif choose == 4:creteTask
-        #     self.updateUser()
+        elif choose == 5:
+            self.updateTask()
         # elif choose == 5:
         #     self.deleteUser()
 
@@ -114,7 +114,6 @@ class GrpcClient:
                 response = stub.createItem(grpc_pb2.Item(id = id0, payload = dictValuesString))
                 id0 = response.id
                 print(f"\n\nRequisicao enviada. ID de acesso: {id0}")
-                # print(f"{time.time() - start} : resp={response.id} and txt={response.txt}: pid={pid}")
                 time.sleep(0.001)
             except KeyboardInterrupt: 
                 print("\nKeyboardInterrupt solicitada pelo usuario")
@@ -154,25 +153,27 @@ class GrpcClient:
             else:
                 print("Usuario nao encontrado")
 
-    def getTask(self, id0 = 0):
-        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
-            stub = tasks_pb2_grpc.TasksStub(channel)
+    def getTask(self, id0 = 0, origin = 0):
+        try:
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = tasks_pb2_grpc.TasksStub(channel)
 
-            if not id0:
-                id0 = int(input("Digite o id da tarefa: "))
+                if not id0:
+                    id0 = int(input("Digite o id da tarefa: "))
 
-            # message = tasks_pb2.getTaskRequest(id=id0)
-            # response = stub.getTasks(message)
-            # print(response.tasks.pop())
-    # try:
-            response = stub.getTask(tasks_pb2.getTaskRequest(id = id0))
-            print()
-            print(response)
-            # if response.id != 0:
-            #     print("Tarefa buscada")
-            #     return response
-            # else:
-            #     print("Tarefa nao encontrada")
+                response = stub.getTask(tasks_pb2.getTaskRequest(id = id0))
+                print()
+                if(origin != 0):
+                    return response
+                else:
+                    print(response)
+        except:
+            return ("Erro na busca da tarefa")
+                # if response.id != 0:
+                #     print("Tarefa buscada")
+                #     return response
+                # else:
+                #     print("Tarefa nao encontrada")
 
     def getUsers(self):
         try:
@@ -220,6 +221,7 @@ class GrpcClient:
             #     return response
             # else:
             #     print("Tarefa nao encontrada")
+    
     ######### Update method #########
     def updateUser(self):
         idInput = int(input("Digite o ID do usuario a ser atualizado: "))
@@ -240,7 +242,6 @@ class GrpcClient:
                     response = stub.updateUser(grpc_pb2.UpdateUserRequest(id = idInput, payload = dictValuesString))
                     id0 = response.id
                     print(f"\n\nRequisicao enviada. ID do usuario atualizado: {id0}")
-                    # print(f"{time.time() - start} : resp={response.id} and txt={response.txt}: pid={pid}")
                     time.sleep(0.001)
                 except KeyboardInterrupt: 
                     print("\nKeyboardInterrupt solicitada pelo usuario")
@@ -250,11 +251,19 @@ class GrpcClient:
             # print(response)
         else:
             print("Usuario nao encontrado")
-        # with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
-        #     stub = grpc_pb2_grpc.TodoStub(channel)
-        #     response = stub.checkItem(grpc_pb2.Item(id = idInput))
-        #     print("aqui vai a resposta")
-        #     print(response)
+
+    def updateTask(self):
+        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+            stub = tasks_pb2_grpc.TasksStub(channel)
+            tempResponse = self.getTask(origin=1)
+            id = (tempResponse.tasks[0].id)
+            if (tempResponse != "Erro na busca da tarefa"):
+                taskData = str(self.fillTaskData(id = id))
+                print(id)
+
+                response = stub.updateTask(tasks_pb2.UpdateTaskRequest(id = id, payload = taskData))
+                print(response)
+        
 
     ######### Delete method #########
     def deleteUser(self):

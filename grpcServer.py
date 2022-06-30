@@ -17,13 +17,13 @@ class Server(grpc_pb2_grpc.TodoServicer):
         self.id = 0
         self.lastPrintTime = time.time()
 
-    def createItem(self, request, context):
+    def createItem(self, request, _):
         self.id += 1
         cacheValues[self.id] = request.payload
 
         return grpc_pb2.Items(id=self.id, payload = request.payload)
 
-    def returnItems(self, request, context):   
+    def returnItems(self, request, _):   
         il = grpc_pb2.ItemsList()
         
         for i in cacheValues:
@@ -31,7 +31,7 @@ class Server(grpc_pb2_grpc.TodoServicer):
 
         return il
 
-    def getUser(self, request, context):
+    def getUser(self, request, _):
         if(not request.id in cacheValues):
             response = grpc_pb2.returnErrorRequest(Error="Usuario nao encontrado")
             return response
@@ -42,7 +42,7 @@ class Server(grpc_pb2_grpc.TodoServicer):
             )
             return response
 
-    def updateUser(self, request, context):
+    def updateUser(self, request, _):
         if(request.id in cacheValues):
             print("ID existente")
             cacheValues[request.id] = request.payload
@@ -54,7 +54,7 @@ class Server(grpc_pb2_grpc.TodoServicer):
 
         return (response)
 
-    def deleteUser(self, request, context):
+    def deleteUser(self, request, _):
         cacheValues.pop(request.id)
 
         response = grpc_pb2.voidNoParam()
@@ -64,13 +64,13 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
     def __init__(self):
         self.taskId = 0
     
-    def createTask(self, request, context):
+    def createTask(self, request, _):
         self.taskId += 1
         cacheValuesTask[self.taskId] = request.payload
 
         return tasks_pb2.Task(id=self.taskId, payload = request.payload)
 
-    def returnItems(self, request, context):   
+    def returnItems(self, request, _):   
         il = grpc_pb2.ItemsList()
         
         for i in cacheValuesTask:
@@ -78,19 +78,19 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
 
         return il
     
-    def getTask(self, request, context):
-        if(not request.id in cacheValuesTask):
-            print("deu erro aqui")
-            response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
-            return response
-        else:
-            it = tasks_pb2.TasksList()
+    def getTask(self, request, _):
+        try:
+            if(not request.id in cacheValuesTask):
+                raise Exception("Nao possui tarefa com o ID informado")
+            else:
+                it = tasks_pb2.TasksList()
 
-            it.tasks.append(tasks_pb2.Task(id = request.id, payload = cacheValuesTask[request.id]))
-            # print("entrou aqui")
-            return it
+                it.tasks.append(tasks_pb2.Task(id = request.id, payload = cacheValuesTask[request.id]))
+                return it
+        except Exception as err:
+            print(err)
 
-    def getTasks(self, request, context):
+    def getTasks(self, request, _):
         if(not request.idUsuario in cacheValuesTask):
             print("deu erro aqui")
             response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
@@ -103,7 +103,7 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
             print("entrou aqui")
             return it
     
-    def getTasksByUser(self, request, context):
+    def getTasksByUser(self, request, _):
         if(not request.idUsuario in cacheValuesTask):
             print("deu erro aqui")
             response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
@@ -119,6 +119,18 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
                     it.tasks.append(tasks_pb2.Task(id = i, payload = cacheValuesTask[i]))
             return it
 
+    def updateTask(self, request, _):
+        if not request.id in cacheValuesTask:
+            raise Exception("Tarefa nao encontrada")
+        else:
+            cacheValuesTask[request.id] = request.payload
+            print(cacheValuesTask[request.id])
+            response = tasks_pb2.Task(
+                id=request.id,
+                payload=cacheValuesTask[request.id]
+            )
+            return response
+            
 # cid\': 1
 
 def mainServer():
@@ -133,7 +145,7 @@ def serve(port=10000):
     server.start()
     print("Server iniciado na porta " + str(port))
 
-    # def createItem(self, request, context):
+    # def createItem(self, request, _):
     #     self.id += 1
     #     cacheValues[self.id] = request.payload
 
