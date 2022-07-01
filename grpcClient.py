@@ -58,7 +58,7 @@ class GrpcClient:
         print(" 3 - Retornar tarefa especifica por ID")
         print(" 4 - Retornar todas tarefas de um usuario")
         print(" 5 - Atualizar tarefa")
-        # print(" 5 - Remover usuario")
+        print(" 6 - Remover usuario")
         print(" 8 - Menu anterior")
         print(" 9 - Finalizar client")
         choose = int(input("Digite o numero da opcao: "))
@@ -72,8 +72,8 @@ class GrpcClient:
             self.getTasksByUser()
         elif choose == 5:
             self.updateTask()
-        # elif choose == 5:
-        #     self.deleteUser()
+        elif choose == 6:
+            self.deleteSpecificTask()
 
         elif choose == 8:
             self.run()
@@ -121,21 +121,22 @@ class GrpcClient:
                 exit()
     
     def createTask(self):
-        id0 = 0
-        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:            
-            stub = tasks_pb2_grpc.TasksStub(channel)
+        try:
+            id0 = 0
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:            
+                stub = tasks_pb2_grpc.TasksStub(channel)
 
-            requestId = self.getUser().id
+                requestId = self.getUser().id
 
-            formatTaskData = self.fillTaskData(requestId)
-            dictValuesString = str(formatTaskData)
+                formatTaskData = self.fillTaskData(requestId)
+                dictValuesString = str(formatTaskData)
 
-            # try:
-            response = stub.createTask(tasks_pb2.Task(id = id0, payload=dictValuesString))
-            id0 = response.id
-            print("Requisicao enviada")
-            # except:
-            #     print("Erro na criacao da tarefa")
+                # try:
+                response = stub.createTask(tasks_pb2.Task(id = id0, payload=dictValuesString))
+                id0 = response.id
+                print("Requisicao enviada")
+        except:
+            print("Erro na criacao da tarefa")
     ######### Read methods #########
     def getUser(self, id0 = 0):
         with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
@@ -187,40 +188,27 @@ class GrpcClient:
             print("deu erro na visualizacao geral")
 
     def getTasks(self, id0 = 1):
-        # try:
+        try:
             with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
                 stub = tasks_pb2_grpc.TasksStub(channel)
 
                 response = stub.getTasks(tasks_pb2.getAllTasksByUser(idUsuario = id0))
                 print(response)
+        except:
+            print("Erro na busca de todas as tarefas")
     
     def getTasksByUser(self, id0 = 0):
-        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
-            stub = tasks_pb2_grpc.TasksStub(channel)
+        try:
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = tasks_pb2_grpc.TasksStub(channel)
 
-            if not id0:
-                id0 = int(input("Digite o id da tarefa: "))
+                if not id0:
+                    id0 = int(input("Digite o id da tarefa: "))
 
-            # message = tasks_pb2.getAllTasksByUser(id=id0)
-            # response = stub.getTasks(message)
-            # print(response.tasks.pop())
-    # try:
-            response = stub.getTasksByUser(tasks_pb2.getAllTasksByUser(idUsuario = id0))
-            print(response)
-        # except:
-        #     print("error!")
-            # if not id0:
-            #     id0 = int(input("Digite o id da tarefa: "))
-
-            # message = tasks_pb2.getTaskRequest(id=id0)
-            # response = stub.getTask(message)
-            # if response.id != 0:
-            #     print("Tarefa buscada")
-            #     # print(response)
-            #     print(response)
-            #     return response
-            # else:
-            #     print("Tarefa nao encontrada")
+                response = stub.getTasksByUser(tasks_pb2.getAllTasksByUser(idUsuario = id0))
+                print(response)
+        except:
+            print("Nao foi possivel retornar as tarefas!")
     
     ######### Update method #########
     def updateUser(self):
@@ -247,8 +235,7 @@ class GrpcClient:
                     print("\nKeyboardInterrupt solicitada pelo usuario")
                     channel.unsubscribe(self. close)
                     exit()
-        
-            # print(response)
+
         else:
             print("Usuario nao encontrado")
 
@@ -286,7 +273,17 @@ class GrpcClient:
         else:
             print("Erro ao excluir usuario")
 
+    def deleteSpecificTask(self):
+        id = int(input("Digite o id da tarefa: "))
 
+        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+            stub = tasks_pb2_grpc.TasksStub(channel)
+            # try:    
+            response = stub.deleteSpecificTask(tasks_pb2.getTaskRequest(id = id))
+            print(response)
+            print(f"Tarefa com ID {id} removida")
+            # except:
+            #     print("Erro na exclusao")
 
     def run(self):   
         # pid = os.getpid()
@@ -302,17 +299,19 @@ class GrpcClient:
         except KeyboardInterrupt: 
             print("\nKeyboardInterrupt solicitada pelo usuario")
             exit()
-        # except grpc._channel._InactiveRpcError:
-        #     print("\n\nerro no grpc\n\n")
-        #     run()
-        # except AttributeError:
-        #     print("AttributeError: Atributo inexistente e/ou incorreto")
-        # except grpc.RpcError as e:
-        #     print("Erro na Conexao do gRPC")
-        #     print(e.code())
-        #     print(e.details())
-        # except Exception:
-        #     print("Erro na execucao do programa!")
+        except grpc._channel._InactiveRpcError:
+            print("\n\nerro no grpc\n\n")
+            # run()
+        except AttributeError:
+            print("AttributeError: Atributo inexistente e/ou incorreto")
+        except grpc.RpcError as e:
+            print("Erro na Conexao do gRPC")
+            print(e.code())
+            print(e.details())
+        except Exception:
+            print("Erro na execucao do programa!")
+        except:
+            print("Erro generico!")
 
     def close(channel):
         "close the channel"

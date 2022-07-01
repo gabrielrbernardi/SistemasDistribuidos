@@ -44,10 +44,15 @@ class TasksStub(object):
                 request_serializer=tasks__pb2.UpdateTaskRequest.SerializeToString,
                 response_deserializer=tasks__pb2.Task.FromString,
                 )
-        self.deleteTask = channel.unary_unary(
-                '/grpcPackage1.Tasks/deleteTask',
-                request_serializer=tasks__pb2.Task.SerializeToString,
-                response_deserializer=tasks__pb2.Task.FromString,
+        self.deleteSpecificTask = channel.unary_unary(
+                '/grpcPackage1.Tasks/deleteSpecificTask',
+                request_serializer=tasks__pb2.getTaskRequest.SerializeToString,
+                response_deserializer=tasks__pb2.voidNoParam.FromString,
+                )
+        self.deleteallTasksByUser = channel.unary_unary(
+                '/grpcPackage1.Tasks/deleteallTasksByUser',
+                request_serializer=tasks__pb2.getAllTasksByUser.SerializeToString,
+                response_deserializer=tasks__pb2.voidNoParam.FromString,
                 )
         self.returnError = channel.unary_unary(
                 '/grpcPackage1.Tasks/returnError',
@@ -95,7 +100,13 @@ class TasksServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def deleteTask(self, request, context):
+    def deleteSpecificTask(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def deleteallTasksByUser(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -140,10 +151,15 @@ def add_TasksServicer_to_server(servicer, server):
                     request_deserializer=tasks__pb2.UpdateTaskRequest.FromString,
                     response_serializer=tasks__pb2.Task.SerializeToString,
             ),
-            'deleteTask': grpc.unary_unary_rpc_method_handler(
-                    servicer.deleteTask,
-                    request_deserializer=tasks__pb2.Task.FromString,
-                    response_serializer=tasks__pb2.Task.SerializeToString,
+            'deleteSpecificTask': grpc.unary_unary_rpc_method_handler(
+                    servicer.deleteSpecificTask,
+                    request_deserializer=tasks__pb2.getTaskRequest.FromString,
+                    response_serializer=tasks__pb2.voidNoParam.SerializeToString,
+            ),
+            'deleteallTasksByUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.deleteallTasksByUser,
+                    request_deserializer=tasks__pb2.getAllTasksByUser.FromString,
+                    response_serializer=tasks__pb2.voidNoParam.SerializeToString,
             ),
             'returnError': grpc.unary_unary_rpc_method_handler(
                     servicer.returnError,
@@ -263,7 +279,7 @@ class Tasks(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def deleteTask(request,
+    def deleteSpecificTask(request,
             target,
             options=(),
             channel_credentials=None,
@@ -273,9 +289,26 @@ class Tasks(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/deleteTask',
-            tasks__pb2.Task.SerializeToString,
-            tasks__pb2.Task.FromString,
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/deleteSpecificTask',
+            tasks__pb2.getTaskRequest.SerializeToString,
+            tasks__pb2.voidNoParam.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def deleteallTasksByUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/deleteallTasksByUser',
+            tasks__pb2.getAllTasksByUser.SerializeToString,
+            tasks__pb2.voidNoParam.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -43,16 +43,19 @@ class Server(grpc_pb2_grpc.TodoServicer):
             return response
 
     def updateUser(self, request, _):
-        if(request.id in cacheValues):
-            print("ID existente")
-            cacheValues[request.id] = request.payload
-            print(cacheValues[request.id])
-        else:
-            print("ID inexistente")
+        try:
+            if(request.id in cacheValues):
+                # print("ID existente")
+                cacheValues[request.id] = request.payload
+                # print(cacheValues[request.id])
+            else:
+                raise Exception("ID inexistente")
 
-        response = grpc_pb2.UpdateUserRequest(id=request.id, payload=str(cacheValues[request.id]))
+            response = grpc_pb2.UpdateUserRequest(id=request.id, payload=str(cacheValues[request.id]))
 
-        return (response)
+            return (response)
+        except Exception as err:
+            raise Exception(err)
 
     def deleteUser(self, request, _):
         cacheValues.pop(request.id)
@@ -65,18 +68,24 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
         self.taskId = 0
     
     def createTask(self, request, _):
-        self.taskId += 1
-        cacheValuesTask[self.taskId] = request.payload
+        try:
+            self.taskId += 1
+            cacheValuesTask[self.taskId] = request.payload
 
-        return tasks_pb2.Task(id=self.taskId, payload = request.payload)
+            return tasks_pb2.Task(id=self.taskId, payload = request.payload)
+        except:
+            raise Exception("Erro na criacao da tarefa")
 
     def returnItems(self, request, _):   
-        il = grpc_pb2.ItemsList()
-        
-        for i in cacheValuesTask:
-            il.items.append(grpc_pb2.Item(id=i, payload=cacheValues[i]))
+        try:
+            il = grpc_pb2.ItemsList()
+            
+            for i in cacheValuesTask:
+                il.items.append(grpc_pb2.Item(id=i, payload=cacheValues[i]))
 
-        return il
+            return il
+        except:
+            raise Exception("Erro no retorno das tarefas")
     
     def getTask(self, request, _):
         try:
@@ -88,48 +97,62 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
                 it.tasks.append(tasks_pb2.Task(id = request.id, payload = cacheValuesTask[request.id]))
                 return it
         except Exception as err:
-            print(err)
+            raise Exception("Erro no retorno da tarefa")
 
     def getTasks(self, request, _):
-        if(not request.idUsuario in cacheValuesTask):
-            print("deu erro aqui")
-            response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
-            return response
-        else:
+        try:
             it = tasks_pb2.TasksList()
 
             for i in cacheValuesTask:
                 it.tasks.append(tasks_pb2.Task(id = i, payload = cacheValuesTask[i]))
-            print("entrou aqui")
             return it
-    
-    def getTasksByUser(self, request, _):
-        if(not request.idUsuario in cacheValuesTask):
-            print("deu erro aqui")
-            response = tasks_pb2.returnErrorRequest(Error="Tarefa nao encontrada")
-            return response
-        else:
-            it = tasks_pb2.TasksList()
+        except:
+            raise Exception("Erro no retorno das tarefas")
 
-            for i in cacheValuesTask:
-                tempStr = cacheValuesTask[i].partition(", 'titulo'")
-                tempStr = tempStr[0].replace("{'cid': ", "")
-                userId = int(tempStr)
-                if(userId == request.idUsuario):
-                    it.tasks.append(tasks_pb2.Task(id = i, payload = cacheValuesTask[i]))
-            return it
+    def getTasksByUser(self, request, _):
+        try:
+            if(not request.idUsuario in cacheValuesTask):
+                raise Exception("Tarefa nao encontrada")
+            else:
+                it = tasks_pb2.TasksList()
+
+                for i in cacheValuesTask:
+                    tempStr = cacheValuesTask[i].partition(", 'titulo'")
+                    tempStr = tempStr[0].replace("{'cid': ", "")
+                    userId = int(tempStr)
+                    if(userId == request.idUsuario):
+                        it.tasks.append(tasks_pb2.Task(id = i, payload = cacheValuesTask[i]))
+                return it
+        except:
+            raise Exception("Erro no retorno das tarefas")
 
     def updateTask(self, request, _):
-        if not request.id in cacheValuesTask:
-            raise Exception("Tarefa nao encontrada")
-        else:
-            cacheValuesTask[request.id] = request.payload
-            print(cacheValuesTask[request.id])
-            response = tasks_pb2.Task(
-                id=request.id,
-                payload=cacheValuesTask[request.id]
-            )
-            return response
+        try:
+            if not request.id in cacheValuesTask:
+                raise Exception("Tarefa nao encontrada")
+            else:
+                cacheValuesTask[request.id] = request.payload
+                # print(cacheValuesTask[request.id])
+                response = tasks_pb2.Task(
+                    id=request.id,
+                    payload=cacheValuesTask[request.id]
+                )
+                return response
+        except:
+            raise Exception("Erro na atualizacao da tarefa")
+
+    def deleteSpecificTask(self, request, _):
+        try:
+            if not request.id in cacheValuesTask:
+                raise Exception("Tarefa nao encontrada")
+            else:
+                cacheValuesTask.pop(request.id)
+
+                response = tasks_pb2.voidNoParam()
+                return response
+        except:
+            raise Exception("Erro na exclusao da tarefa")
+
             
 # cid\': 1
 

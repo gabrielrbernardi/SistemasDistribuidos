@@ -11,7 +11,8 @@ service Tasks {
     rpc getTasks (getAllTasksByUser) returns (TasksList) {}
     rpc getTasksByUser (getAllTasksByUser) returns (TasksList) {}
     rpc updateTask (UpdateTaskRequest) returns (Task) {}
-    rpc deleteTask (Task) returns (Task) {}
+    rpc deleteSpecificTask (getTaskRequest) returns (voidNoParam) {}
+    rpc deleteallTasksByUser (getAllTasksByUser) returns (voidNoParam) {}
     rpc returnError (voidNoParam) returns (voidNoParam) {}
 }
 
