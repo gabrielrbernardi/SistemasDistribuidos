@@ -8,6 +8,10 @@ import grpc_pb2_grpc
 import tasks_pb2
 import tasks_pb2_grpc
 
+# import context
+
+import paho.mqtt.publish as publish
+
 cacheValues = {}
 
 cacheValuesTask = {}
@@ -153,9 +157,6 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
         except:
             raise Exception("Erro na exclusao da tarefa")
 
-            
-# cid\': 1
-
 def mainServer():
     availablePorts = [10000, 10001, 10002, 10003]
     serve()
@@ -167,6 +168,8 @@ def serve(port=10000):
     server.add_insecure_port("[::]:" + str(port))
     server.start()
     print("Server iniciado na porta " + str(port))
+
+    publish.single(str(port) + "/user", "boo", hostname="localhost")
 
     # def createItem(self, request, _):
     #     self.id += 1
