@@ -13,6 +13,7 @@ service Tasks {
     rpc updateTask (UpdateTaskRequest) returns (Task) {}
     rpc deleteSpecificTask (getTaskRequest) returns (voidNoParam) {}
     rpc deleteallTasksByUser (getAllTasksByUser) returns (voidNoParam) {}
+    rpc flushTaskContent (voidNoParam) returns (voidNoParam) {}
     rpc returnError (voidNoParam) returns (voidNoParam) {}
 }
 

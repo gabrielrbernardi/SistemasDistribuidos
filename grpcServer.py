@@ -67,6 +67,12 @@ class Server(grpc_pb2_grpc.TodoServicer):
         response = grpc_pb2.voidNoParam()
         return response
 
+    def flushUserContent(self, request, _):
+        publish.single("content/client_" + str(portInput) + "/users", str(cacheValues), hostname="localhost")
+
+        response = tasks_pb2.voidNoParam()
+        return response
+
 class ServerTask(tasks_pb2_grpc.TasksServicer):
     def __init__(self):
         self.taskId = 0
@@ -156,10 +162,43 @@ class ServerTask(tasks_pb2_grpc.TasksServicer):
                 return response
         except:
             raise Exception("Erro na exclusao da tarefa")
+    
+    def flushTaskContent(self, request, _):
+        publish.single("content/client_" + str(portInput) + "/tasks", str(cacheValuesTask), hostname="localhost")
+
+        response = tasks_pb2.voidNoParam()
+        return response
+
+portInput = 0
 
 def mainServer():
     availablePorts = [10000, 10001, 10002, 10003]
-    serve()
+    
+    print(" 1 - 10000")
+    print(" 2 - 10001")
+    print(" 3 - 10002")
+    print(" 4 - 10003")
+    
+    global portInput
+    while True:
+        portInput = int(input("Digite a opcao de porta que sera inicializado: "))
+        
+        port = 0
+        if portInput == 1:
+            port = availablePorts[0]
+        elif portInput == 2:
+            port = availablePorts[1]
+        elif portInput == 3:
+            port = availablePorts[2]
+        elif portInput == 4:
+            port = availablePorts[1]
+        
+        if portInput > 4 and portInput < 1:
+            print("Opcao invalida")
+        else:
+            break
+
+    serve(port = port)
 
 def serve(port=10000):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
@@ -169,14 +208,6 @@ def serve(port=10000):
     server.start()
     print("Server iniciado na porta " + str(port))
 
-    publish.single(str(port) + "/user", "boo", hostname="localhost")
-
-    # def createItem(self, request, _):
-    #     self.id += 1
-    #     cacheValues[self.id] = request.payload
-
-    #     return grpc_pb2.Items(id=self.id, payload = request.payload)
-
     try:
         while True:
             # print(f"server na thread: {threading.active_count()}")
@@ -184,6 +215,8 @@ def serve(port=10000):
     except KeyboardInterrupt:
         print("\nKeyboardInterrupt solicitado pelo usuario")
         server.stop(0)
+    except:
+        print("Erro generico")
 
 if __name__ == "__main__":
     mainServer()

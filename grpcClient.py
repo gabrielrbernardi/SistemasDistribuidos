@@ -13,14 +13,31 @@ class GrpcClient:
     def __init__(self, port):
         self.port = port
 
-    def userType(self):
-        print("\n" * 50)
-        print("TIPO USUARIO".center(50, "="))
-        print("1 - Administrador")
-        print("2 - Cliente")
-        choose = int(input("Escolha o tipo de usuario: "))
-        return choose
+    def portNumber():
+        while True:
+            print("\n" * 50)
+            print("1 - 10000")
+            print("2 - 10001")
+            print("3 - 10002")
+            print("4 - 10003")
+            choose = int(input("Digite a opcao de porta que sera inicializada: "))
 
+            if choose > 4 and choose < 1:
+                print("Porta invalida")
+            else:
+                return choose
+    
+    def userType(self):
+        while True:
+            print("TIPO USUARIO".center(50, "="))
+            print("1 - Administrador")
+            print("2 - Cliente")
+            choose = int(input("Escolha o tipo de usuario: "))
+
+            if choose > 2 and choose < 1:
+                print("Opcao invalida")
+            else:
+                return choose
 
     def userActionAdmin(self):
         print("MENU Admin".center(50, "="))
@@ -29,6 +46,7 @@ class GrpcClient:
         print(" 3 - Retornar usuario especifico")
         print(" 4 - Atualizar usuario")
         print(" 5 - Remover usuario")
+        print(" 6 - Enviar conteudo")
         print(" 8 - Menu anterior")
         print(" 9 - Finalizar client")
         choose = int(input("Digite o numero da opcao: "))
@@ -42,6 +60,8 @@ class GrpcClient:
             self.updateUser()
         elif choose == 5:
             self.deleteUser()
+        elif choose == 6:
+            self.flushUserContent()
 
         elif choose == 8:
             self.run()
@@ -59,6 +79,7 @@ class GrpcClient:
         print(" 4 - Retornar todas tarefas de um usuario")
         print(" 5 - Atualizar tarefa")
         print(" 6 - Remover usuario")
+        print(" 7 - Enviar conteudo")
         print(" 8 - Menu anterior")
         print(" 9 - Finalizar client")
         choose = int(input("Digite o numero da opcao: "))
@@ -74,6 +95,8 @@ class GrpcClient:
             self.updateTask()
         elif choose == 6:
             self.deleteSpecificTask()
+        elif choose == 7:
+            self.flushTaskContent()
 
         elif choose == 8:
             self.run()
@@ -285,10 +308,36 @@ class GrpcClient:
             # except:
             #     print("Erro na exclusao")
 
+    ######### Sent contents PUB/SUB #########
+    
+    def flushUserContent(self):
+        try:
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = grpc_pb2_grpc.TodoStub(channel)
+
+                response = stub.flushUserContent(grpc_pb2.voidNoParam())
+                print(response)
+        except:
+            print("Erro no envio dos usuarios via Mosquitto")
+
+
+    def flushTaskContent(self):
+        try:
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = tasks_pb2_grpc.TasksStub(channel)
+
+                response = stub.flushTaskContent(tasks_pb2.voidNoParam())
+                print(response)
+        except:
+            print("Erro no envio das tarefas via Mosquitto")
+
+    ######### EXECUCAO #########
+
     def run(self):   
+        print("Client conectando na porta " + str(self.port))
+
         # pid = os.getpid()
         try:
-            print("Client conectando na porta " + str(self.port))
             tipoUsuario = self.userType()
             if tipoUsuario == 1: #admin
                 while True:
@@ -301,7 +350,7 @@ class GrpcClient:
             exit()
         except grpc._channel._InactiveRpcError:
             print("\n\nerro no grpc\n\n")
-            # run()
+            self.run()
         except AttributeError:
             print("AttributeError: Atributo inexistente e/ou incorreto")
         except grpc.RpcError as e:
@@ -318,8 +367,21 @@ class GrpcClient:
         channel.close()
 
 if __name__ == "__main__":
+            
+    portInput = GrpcClient.portNumber()
     availablePorts = [10000, 10001, 10002, 10003]
+    tempPort = 0
+
+    if portInput == 1:
+        tempPort = availablePorts[0]
+    elif portInput == 2:
+        tempPort = availablePorts[1]
+    elif portInput == 3:
+        tempPort = availablePorts[2]
+    elif portInput == 4:
+        tempPort = availablePorts[3]
+
     # port = int(input("Digite a porta de conexao"))
     # gc = GrpcClient(port)
-    gc = GrpcClient(availablePorts[0])
+    gc = GrpcClient(tempPort)
     gc.run()

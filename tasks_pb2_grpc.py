@@ -54,6 +54,11 @@ class TasksStub(object):
                 request_serializer=tasks__pb2.getAllTasksByUser.SerializeToString,
                 response_deserializer=tasks__pb2.voidNoParam.FromString,
                 )
+        self.flushTaskContent = channel.unary_unary(
+                '/grpcPackage1.Tasks/flushTaskContent',
+                request_serializer=tasks__pb2.voidNoParam.SerializeToString,
+                response_deserializer=tasks__pb2.voidNoParam.FromString,
+                )
         self.returnError = channel.unary_unary(
                 '/grpcPackage1.Tasks/returnError',
                 request_serializer=tasks__pb2.voidNoParam.SerializeToString,
@@ -112,6 +117,12 @@ class TasksServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def flushTaskContent(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def returnError(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -159,6 +170,11 @@ def add_TasksServicer_to_server(servicer, server):
             'deleteallTasksByUser': grpc.unary_unary_rpc_method_handler(
                     servicer.deleteallTasksByUser,
                     request_deserializer=tasks__pb2.getAllTasksByUser.FromString,
+                    response_serializer=tasks__pb2.voidNoParam.SerializeToString,
+            ),
+            'flushTaskContent': grpc.unary_unary_rpc_method_handler(
+                    servicer.flushTaskContent,
+                    request_deserializer=tasks__pb2.voidNoParam.FromString,
                     response_serializer=tasks__pb2.voidNoParam.SerializeToString,
             ),
             'returnError': grpc.unary_unary_rpc_method_handler(
@@ -308,6 +324,23 @@ class Tasks(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/deleteallTasksByUser',
             tasks__pb2.getAllTasksByUser.SerializeToString,
+            tasks__pb2.voidNoParam.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def flushTaskContent(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage1.Tasks/flushTaskContent',
+            tasks__pb2.voidNoParam.SerializeToString,
             tasks__pb2.voidNoParam.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -44,6 +44,11 @@ class TodoStub(object):
                 request_serializer=grpc__pb2.voidNoParam.SerializeToString,
                 response_deserializer=grpc__pb2.voidNoParam.FromString,
                 )
+        self.flushUserContent = channel.unary_unary(
+                '/grpcPackage.Todo/flushUserContent',
+                request_serializer=grpc__pb2.voidNoParam.SerializeToString,
+                response_deserializer=grpc__pb2.voidNoParam.FromString,
+                )
 
 
 class TodoServicer(object):
@@ -85,6 +90,12 @@ class TodoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def flushUserContent(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_TodoServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -115,6 +126,11 @@ def add_TodoServicer_to_server(servicer, server):
             ),
             'returnError': grpc.unary_unary_rpc_method_handler(
                     servicer.returnError,
+                    request_deserializer=grpc__pb2.voidNoParam.FromString,
+                    response_serializer=grpc__pb2.voidNoParam.SerializeToString,
+            ),
+            'flushUserContent': grpc.unary_unary_rpc_method_handler(
+                    servicer.flushUserContent,
                     request_deserializer=grpc__pb2.voidNoParam.FromString,
                     response_serializer=grpc__pb2.voidNoParam.SerializeToString,
             ),
@@ -225,6 +241,23 @@ class Todo(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/grpcPackage.Todo/returnError',
+            grpc__pb2.voidNoParam.SerializeToString,
+            grpc__pb2.voidNoParam.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def flushUserContent(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpcPackage.Todo/flushUserContent',
             grpc__pb2.voidNoParam.SerializeToString,
             grpc__pb2.voidNoParam.FromString,
             options, channel_credentials,

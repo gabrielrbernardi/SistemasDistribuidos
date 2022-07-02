@@ -11,6 +11,7 @@ service Todo {
     rpc updateUser (UpdateUserRequest) returns (Items) {}
     rpc deleteUser (Item) returns (Items) {}
     rpc returnError (voidNoParam) returns (voidNoParam) {}
+    rpc flushUserContent (voidNoParam) returns (voidNoParam) {}
 }
 
 message voidNoParam {}
