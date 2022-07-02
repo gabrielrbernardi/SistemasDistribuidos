@@ -1,0 +1,792 @@
+    1  cd Desktop/
+    2  ls
+    3  cd pasta/
+    4  ls
+    5  cd ..
+    6  mkdir github
+    7  ls
+    8  cd github/
+    9  ;s
+   10  ls
+   11  git clone https://github.com/gabrielrbernardi/LinuxScripts.git
+   12  sudo apt install git
+   13  git clone https://github.com/gabrielrbernardi/LinuxScripts.git
+   14  ls
+   15  cd LinuxScripts/n
+   16  cd LinuxScripts/
+   17  ls
+   18  cp ../pasta/installPrograms.sh ./installPrograms1.sh
+   19  cd ..
+   20  cp ../../pasta/installPrograms.sh ./installPrograms1.sh
+   21  cd ..
+   22  cd github/ 
+   23  cd LinuxScripts/
+   24  cp ../../pasta/installPrograms.sh ./installPrograms1.sh
+   25  ls
+   26  rm installPrograms.sh 
+   27  ls
+   28  mv installPrograms1.sh installPrograms.sh 
+   29  ls
+   30  git add .
+   31  git status
+   32  nano installPrograms.sh 
+   33  git add .
+   34  git commit -m "Update Script"
+   35  git config --global user.email "gabrielrbernardi@gmail.com"
+   36  git config --global user.name "Gabriel Bernardi"
+   37  git commit -m "Update Script"
+   38  git push
+   39  git config -l
+   40  git config --global credential.helper cache
+   41  gut pull
+   42  git pull
+   43  git push
+   44  sudo apt install ratbagd
+   45  sudo apt install piper
+   46  ls
+   47  cd Desktop/
+   48  ls
+   49  mkdir pasta
+   50  cd pasta/
+   51  wget https://github.com/gabrielrbernardi/LinuxScripts/blob/main/installPrograms.sh
+   52  ls
+   53  ls -al
+   54  chmod +x installPrograms.sh 
+   55  ls -al
+   56  ./installPrograms.sh 
+   57  rm installPrograms.sh 
+   58  ls
+   59  wget https://raw.githubusercontent.com/gabrielrbernardi/LinuxScripts/main/installPrograms.sh
+   60  ls
+   61  chmod +x installPrograms.sh 
+   62  ls
+   63  nano installPrograms.sh 
+   64  ./installPrograms.sh 
+   65  exit
+   66  ls
+   67  nano udpateLinkSeries.sh
+   68  ls
+   69  chmod +x updateLinkSeries.sh
+   70  ls
+   71  ls a-l
+   72  ls -al
+   73  ./udpateLinkSeries.sh 
+   74  cd ..
+   75  cd pasta/
+   76  lls
+   77  ls
+   78  ./updateLinkSeries.sh
+   79  ls -al
+   80  ./udpateLinkSeries.sh 
+   81  cp udpateLinkSeries.sh updateLinkSeries.sh 
+   82  ./updateLinkSeries.sh 
+   83  ls
+   84  nano updateLinkSeries.sh 
+   85  ./updateLinkSeries.sh 
+   86  code .
+   87  timedatectl set-local-rtc 1
+   88  timedatectl
+   89  sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+   90  sudo apt-get install grub-customizer 
+   91  sudo apt-get purge transmission-gtk 
+   92  sudo apt-get purge transmission-cli
+   93  sudo apt-get purge transmission*
+   94  sudo apt-get remove transmission*
+   95  sudo apt-get install transmission transmission-qt
+   96  cd Desktop/
+   97  ls
+   98  cd pasta/
+   99  ls
+  100  code .
+  101  nmap
+  102  sudo apt install nmpa
+  103  sudo apt install nmap
+  104  sudo snap install teams
+  105  exit
+  106  ls
+  107  mkdir UFU
+  108  ls
+  109  cd UFU
+  110  ls
+  111  mkdir seg
+  112  cd seg
+  113  mkdir tp4
+  114  cd tp4
+  115  ls
+  116  touch script.sh
+  117  nano script.sh 
+  118  chmod +x script.sh 
+  119  ls
+  120  ./script.sh 
+  121  touch cidades.txt
+  122  nano cidades.txt 
+  123  ./script.sh 
+  124  ls
+  125  man nmap
+  126  nmap --helpo
+  127  nmap --help
+  128  nmap -v www.ufu.br -oN saida.txt
+  129  ls
+  130  cat saida.txt 
+  131  rm saida.txt 
+  132  nano script.sh 
+  133  ./script.sh 
+  134  nmap --helpo
+  135  nmap --help
+  136  nano script.sh 
+  137  ./script.sh 
+  138  nano script.sh 
+  139  ./script.sh 
+  140  nano script.sh 
+  141  ./script.sh 
+  142  nano script.sh 
+  143  ./script.sh 
+  144  nano script.sh 
+  145  ./script.sh 
+  146  nano script.sh 
+  147  ./script.sh 
+  148  nano script.sh 
+  149  ./script.sh 
+  150  nano script.sh 
+  151  ./script.sh 
+  152  nano script.sh 
+  153  ./script.sh 
+  154  nano script.sh 
+  155  ./script.sh 
+  156  nano script.sh 
+  157  ./script.sh 
+  158  ls
+  159  rm saida1.txt 
+  160  ls -al
+  161  nano cidades.txt 
+  162  ./script.sh 
+  163  ls
+  164  cat saida1.txt 
+  165  cat saida2.txt 
+  166  cat saida3.txt 
+  167  nano script.sh 
+  168  nmap --help
+  169  nmap www.ufu.br -v -sU
+  170  sudo nmap www.ufu.br -v -sU
+  171  sudo nmap www.ufu.br -v -sU -t4
+  172  nmap --help
+  173  sudo nmap www.ufu.br -v -sU -sS
+  174  nano script.sh 
+  175  rm saida1.txt 
+  176  ls
+  177  rm saida1.txt 
+  178  ls
+  179  rm saida2.txt 
+  180  rm saida3.txt 
+  181  ls
+  182  ./script.sh 
+  183  cat saida1.txt 
+  184  cat saida3.txt 
+  185  nano script.sh 
+  186  nano cidades.txt 
+  187  nano script.sh 
+  188  ./script.sh 
+  189  ls
+  190  nano cidades.txt 
+  191  cd ..
+  192  tar -xfc tp4.zip
+  193  tar -zcvf tp4.zip
+  194  ls
+  195  tar -zcvf tp4 tp4.zip
+  196  tar -zcvf tp4 -r tp4.zip
+  197  tar --help
+  198  ping www.ufu.br
+  199  ping 192.168.100.0/24
+  200  nmap -v 192.168.100.0/24
+  201  nmap -v 192.168.100.0/24 -p 80
+  202  ls
+  203  cd UFU
+  204  ls
+  205  cd seg/
+  206  ls
+  207  mkdir tp5
+  208  cd tp5
+  209  ls
+  210  nmap -v 200.136.0.0/20 -p 80
+  211  nmap -v 200.136.0.0/20 -p 80 -oN resultados.txt
+  212  ls
+  213  cat resultados.txt 
+  214  ping 200.136.7.222
+  215  ping http://adm012.rusp.net.recad.usp.br/~
+  216  ping adm012.rusp.net.recad.usp.br
+  217  nmap 200.136.9.18
+  218  telnet 200.136.9.18
+  219  ssh root@200.136.9.18
+  220  nmap 200.136.7.219
+  221  nmap 200.136.7.219 -v
+  222  nmap 200.136.7.248
+  223  nmap 200.136.9.18
+  224  telnet 200.136.9.18
+  225  exit
+  226  lsd
+  227  cd UFU
+  228  cd seg/tp5/
+  229  ls
+  230  nmap -v 200.136.0.0/20 -p 22-23
+  231  nmap -v 200.136.0.0/20 -p 22-23 -oN resultados1.txt
+  232  ls
+  233  telnet 200.136.9.18
+  234  telnet 200.136.9.19
+  235  nmap 200.136.9.19
+  236  nmap 200.136.9.18
+  237  wget 200.136.9.18
+  238  cat index.html 
+  239  rm index.html 
+  240  ls
+  241  cd UFU
+  242  lks
+  243  ls
+  244  cd seg/
+  245  ls
+  246  cd tp4/
+  247  ls
+  248  cat script.sh 
+  249  man nmap
+  250  nmap --help
+  251  cat script.sh 
+  252  ls
+  253  mkdir tp1
+  254  cp script.sh tp1/
+  255  cp cidades.txt tp1/
+  256  cd tp1/
+  257  cp cidades.txt empresaRegional.txt
+  258  ls
+  259  nano empresaRegional.txt 
+  260  cp empresaRegional.txt empresaNacional.txt
+  261  cp empresaRegional.txt empresaInternacional.txt
+  262  ls
+  263  nano empresaRegional.txt 
+  264  nano empresaNacional.txt 
+  265  nano empresaInternacional.txt 
+  266  nano script.sh 
+  267  cp script.sh scriptRegional.sh 
+  268  cp script.sh scriptNacional.sh 
+  269  cp script.sh scriptInternacional.sh 
+  270  ls
+  271  nano scriptRegional.sh 
+  272  ./scriptRegional.sh 
+  273  nano scriptRegional.sh 
+  274  ls
+  275  rm empresaRegional -rf
+  276  ls
+  277  ./scriptRegional.sh 
+  278  ls
+  279  cd empresaRegional/
+  280  ls
+  281  cat saida1.txt 
+  282  cat saida2.txt 
+  283  cat saida3.txt 
+  284  nmap -v 54.207.86.25
+  285  ping 54.207.86.25
+  286  ping www.zup.com.br
+  287  ls
+  288  cd .
+  289  cd ..
+  290  ls
+  291  nano scriptNacional.sh 
+  292  ./scriptNacional.sh 
+  293  ls
+  294  rm -rf empresaNacional
+  295  ls
+  296  nano scriptNacional.sh 
+  297  ./scriptNacional.sh 
+  298  nano scriptRegional.sh 
+  299  nano scriptNacional.sh 
+  300  cat scriptRegional.sh 
+  301  cat scriptNacional.sh 
+  302  cd empresaRegional/
+  303  cat saida1.txt 
+  304  ls
+  305  cd ..
+  306  nano scriptInternacional.sh 
+  307  ./scriptInternacional.sh 
+  308  ls
+  309  rm -rf empresaInternacional
+  310  nano scriptInternacional.sh 
+  311  ./scriptInternacional.sh 
+  312  cat scriptInternacional.sh 
+  313  telnet 200.136.9.18
+  314  telnet 200.136.3.225
+  315  ssh 200.136.3.225
+  316  telnet 200.136.3.225
+  317  telnet 200.136.1.33
+  318  nmap -v -p0-65535 www.portalestudante.ufu.br
+  319  nmap www.portalestudante.ufu.br
+  320  nmap www.portalestudante.ufu.br -v
+  321  nmap www.portalestudante.ufu.br -v -sU
+  322  sudo nmap www.portalestudante.ufu.br -v -sU
+  323  nmap -v 192.168.100.8
+  324  nmap -v 192.168.100.1
+  325  telnet 192.168.100.1
+  326  ssh root@192.168.100.1
+  327  telnet 200.136.3.225
+  328  telnet 200.136.1.33
+  329  telnet 200.136.7.210
+  330  telnet 200.136.3.225
+  331  ifconfig
+  332  sudo apt install net-tools
+  333  ip addr
+  334  sudo add-apt-repository ppa:gns3/ppa
+  335  sudo apt update
+  336  sudo apt install gns3-gui gns3-server
+  337  sudo apt install paprefs
+  338  paprefs 
+  339  cd Documents/
+  340  ls
+  341  mkdir github
+  342  mv SistemasDistribuidos/ github/
+  343  ls
+  344  cd github/
+  345  ls
+  346  cd SistemasDistribuidos/
+  347  git status
+  348  code .
+  349  exit
+  350  /bin/python3
+  351  cd Documents/
+  352  cd github/
+  353  ls
+  354  cd SistemasDistribuidos/
+  355  ls
+  356  git add
+  357  git add .
+  358  git status
+  359  git commit -m "using grpc for the first time"
+  360  git push
+  361  git config --global user.email "gabrielrbernardi@gmail.com"
+  362  git config --global user.name "gabrielrbernardi"
+  363  cd ..
+  364  ls
+  365  nano githubToken
+  366  ls
+  367  cd github/
+  368  cd SistemasDistribuidos/
+  369  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  370  git status
+  371  cd ..
+  372  ls
+  373  nano github
+  374  cat githubToken 
+  375  cd  github/
+  376  cd SistemasDistribuidos/
+  377  ;ls
+  378  ls
+  379  git add .
+  380  git status
+  381  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  382  git commit -m "update and bug"
+  383  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  384  exit
+  385  python3 grpcClient.py 
+  386  dasdas
+  387  python3 grpcClient.py 
+  388  2
+  389  python3 grpcClient.py 
+  390  python3 grpcClient.py 2
+  391  python3 grpcClient.py 
+  392  2
+  393  python3 grpcClient.py 
+  394  [A
+  395  1
+  396  python3 grpcClient.py 
+  397  ls
+  398  pip3 install grpc
+  399  sudo apt install python3-pip
+  400  pip3 install grpc
+  401  pip3 install grpcio
+  402  python3 grpcServer.py 
+  403  python3 grpcServer.py &
+  404  python3 grpcServer.py $i &
+  405  python3 grpcServer.py
+  406  fg
+  407  python3 grpcServer.py
+  408  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  409  pip3 install grpcio
+  410  pip3 install grpcio-tools
+  411  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  412  python3 grpcServer.py
+  413  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  414  python3 grpcServer.py
+  415  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  416  python3 grpcServer.py
+  417  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  418  python3 grpcServer.py
+  419  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  420  python3 grpcServer.py
+  421  [A
+  422  python3 grpcServer.py
+  423  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  424  python3 grpcServer.py
+  425  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  426  python3 grpcServer.py
+  427  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  428  python3 grpcServer.py
+  429  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  430  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto\
+  431  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  432  python3 grpcServer.py
+  433  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  434  python3 grpcServer.py
+  435  ls
+  436  python3 grpcServer.py
+  437  python3 grpcClient.py 
+  438  2
+  439  python3 grpcClient.py 
+  440  3
+  441  python3 grpcClient.py 
+  442  adsdhjas
+  443  12
+  444  1
+  445  asjdghasjda
+  446  dasdhjas
+  447  21
+  448  python3 grpcClient.py 
+  449  ls
+  450  python3 grpcServer.py
+  451  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  452  python3 grpcServer.py
+  453  cd github/
+  454  cd SistemasDistribuidos/
+  455  code .
+  456  exit
+  457  cd github/SistemasDistribuidos/
+  458  ls
+  459  code .
+  460  exit
+  461  python3
+  462  python3 grpcClient.py 
+  463  1
+  464  python3 grpcClient.py 
+  465  python3 grpcServer.py 
+  466  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  467  python3 grpcServer.py 
+  468  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  469  python3 grpcServer.py 
+  470  cd ..
+  471  cat githubToken 
+  472  history
+  473  git status
+  474  cd github/SistemasDistribuidos/
+  475  git status
+  476  git add .
+  477  git commit -m "User CRUD finished"
+  478  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  479  cd github/SistemasDistribuidos/
+  480  code .
+  481  cd github/SistemasDistribuidos/
+  482  code .
+  483  exit
+  484  /bin/python3
+  485  python3 grpcClient.py 
+  486  python3 grpcServer.py 
+  487  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  488  python3 grpcServer.py 
+  489  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  490  python3 grpcServer.py 
+  491  git status
+  492  git add .
+  493  git status
+  494  git commit -m "User CRUD finished / Task CRUD initialized"
+  495  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  496  cd github/SistemasDistribuidos/
+  497  code .
+  498  exit
+  499  python3 grpcClient.py 
+  500  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  501  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  502  python3 grpcServer.py 
+  503  cd Documents/
+  504  cd github/SistemasDistribuidos/
+  505  ls
+  506  git add .
+  507  git commit -m "Updates"
+  508  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  509  exit
+  510  shutdown now
+  511  python3 grpcClient.py 
+  512  python3 grpcServer.py 
+  513  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  514  python3 grpcServer.py 
+  515  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  516  python3 grpcServer.py 
+  517  cd github/SistemasDistribuidos/
+  518  code .
+  519  exit
+  520  code .
+  521  cat /etc/gdm3/custom.conf
+  522  sudo nano /etc/gdm3/custom.conf
+  523  sudo dpkg-reconfigure gdm3
+  524  reboot
+  525  python3 grpcClient.py 
+  526  python3 grpcServer.py 
+  527  code .
+  528  ls
+  529  git status
+  530  git add .
+  531  git commit -m "Create and read Tasks finished"
+  532  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  533  python3 grpcClient.py 
+  534  1
+  535  pedro
+  536  pedro@
+  537  20
+  538  8
+  539  2
+  540  1
+  541  testesss
+  542  testess
+  543  1
+  544  2
+  545  te
+  546  python3 grpcServer.py 
+  547  python3 grpcC
+  548  python3 grpcClient.py 
+  549  sda
+  550  sdas
+  551  12
+  552  1
+  553  pedro
+  554  pedro@
+  555  20
+  556  8
+  557  2
+  558  1
+  559  testesss
+  560  python3 grpcClient.py 
+  561  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  562  python3 grpcServer.py 
+  563  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  564  python3 grpcServer.py 
+  565  python3 grpcClient.py 
+  566  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  567  python3 grpcServer.py 
+  568  git add .
+  569  git commit -m "Update task finished"
+  570  history
+  571  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  572  code .
+  573  /bin/python3
+  574  mosquitto_pub -t 'test/top' -m 'teste'
+  575  sudo apt-get update
+  576  sudo apt-get install mosquitto
+  577  mosquitto
+  578  sudo apt install mosquitto
+  579  sudo apt update
+  580  sudo apt install mosquitto
+  581  sudo apt install libmosquitto1
+  582  sudo apt install libssl1.1
+  583  sudo apt install libssl1
+  584  sudo apt update
+  585  sudo apt install mosquitto
+  586  sudo systemctl status mosquitto
+  587  mosquitto_sub -t 'test/top' -v
+  588  sudo apt install mosquitto-clients
+  589  mosquitto_sub -t 'test/top' -v
+  590  python3 grpcServer.py 
+  591  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  592  python3 grpcServer.py 
+  593  git add .
+  594  git commit -m "Tasks CRUD finished"
+  595  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  596  snap install mosquitto
+  597  mosquitto
+  598  snap remove mosquitto
+  599  sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+  600  sudo apt-get update
+  601  python3 grpcServer.py 
+  602  git add .
+  603  git commit -m "Mosquitto initialized"
+  604  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  605  git status
+  606  python3 grpcClient.py 
+  607  python3 grpcClient.py < testes.txt 
+  608  python3 grpcClient.py 
+  609  python3 mqttServer.py 
+  610  pip3 install paho-mqtt
+  611  exit
+  612  python3 greet_client.py 
+  613  python3 greet_server.py 
+  614  git add .
+  615  git commit -m "Falta mosquitto"
+  616  git push https://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@github.com/xdpedrimbr/SistemasDistribuidos.git
+  617  python3 greet_server.py 
+  618  git add .
+  619  git commit -m "Falta mosquitto"
+  620  git push https://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@github.com/xdpedrimbr/SistemasDistribuidos.git
+  621  python3 mqttServer.py 
+  622  python3 grpcServer.py 
+  623  cd ..
+  624  cd gabriel/
+  625  ls
+  626  cd Documents/
+  627  ls
+  628  cd github/
+  629  ls
+  630  git clone https://github.com/xdpedrimbr/SistemasDistribuidos.git
+  631  cd ..
+  632  mkdir pedrim
+  633  cd pedrim/
+  634  git clone https://github.com/xdpedrimbr/SistemasDistribuidos.git
+  635  cd SistemasDistribuidos/
+  636  ls
+  637  code .
+  638  cd ..c
+  639  cd ..
+  640  ls
+  641  cd github/
+  642  ls
+  643  cd SistemasDistribuidos/
+  644  ls
+  645  code .
+  646  shutdown now
+  647  code .
+  648  exit
+  649  cd Documents/github/SistemasDistribuidos/
+  650  python3 grpcClient.py 
+  651  cd Documents/github/SistemasDistribuidos/
+  652  python3 grpcClient.py 
+  653  python3 grpcServer.py 
+  654  exit
+  655  cd Documents/github/SistemasDistribuidos/
+  656  ls
+  657  python3 grpcClient.py 
+  658  exit
+  659  python3 mqttServer.py 
+  660  python3 mqttServer.py ~
+  661  python3 mqttServer.py
+  662  clear
+  663  python3 mqttServer.py
+  664  python3 grpcClient.py 
+  665  1
+  666  pedro
+  667  pedro@
+  668  20
+  669  8
+  670  2
+  671  1
+  672  testesss
+  673  testess
+  674  1
+  675  2
+  676  te
+  677  python3 grpcClient.py 
+  678  1
+  679  pedro
+  680  pedro@
+  681  20
+  682  8
+  683  2
+  684  1
+  685  testesss
+  686  testess
+  687  1
+  688  2
+  689  python3 grpcClient.py 
+  690  python3 grpcClient.py < tests/test01.txt 
+  691  python3 grpcClient.py 
+  692  python3 grpcClient.py < tests/test01.txt 
+  693  python3 grpcClient.py 
+  694  sdas
+  695  12
+  696  1
+  697  pedro
+  698  pedro@
+  699  20
+  700  8
+  701  2
+  702  1
+  703  python3 grpcClient.py 
+  704  pedro@
+  705  20
+  706  8
+  707  2
+  708  1
+  709  testesss
+  710  testess
+  711  1
+  712  2
+  713  te
+  714  python3 grpcClient.py 
+  715  12
+  716  1
+  717  gabriel
+  718  gabriel@
+  719  20
+  720  8
+  721  2
+  722  1
+  723  tarefa 01
+  724  tarefaDesc 01
+  725  1
+  726  2
+  727  tarefa 02
+  728  tarefaDesc 02
+  729  7
+  730  8
+  731  1
+  732  6
+  733  python3 grpcClient.py 
+  734  clear
+  735  python3 grpcClient.py 
+  736  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  737  python3 grpcServer.py 
+  738  python3 grpcServer.py
+  739  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/tasks.proto
+  740  python3 grpcServer.py
+  741  python3 -m grpc_tools.protoc -I./proto --python_out=. --grpc_python_out=. ./proto/grpc.proto
+  742  python3 grpcServer.py
+  743  clear
+  744  python3 grpcServer.py
+  745  git add .
+  746  git commit -m "Mosquitto finished"
+  747  history
+  748  git push https://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@github.com/gabrielrbernardi/SistemasDistribuidos.git
+  749  cd Documents/github/SistemasDistribuidos/
+  750  python3 grpcClient.py 
+  751  12
+  752  1
+  753  gabriel
+  754  gabriel@
+  755  20
+  756  8
+  757  2
+  758  1
+  759  tarefa 01
+  760  tarefaDesc 01
+  761  1
+  762  2
+  763  tarefa 02
+  764  tarefaDesc 02
+  765  7
+  766  8
+  767  1
+  768  6
+  769  python3 grpcClient.py 
+  770  cd Documents/
+  771  ls
+  772  cd github/
+  773  cd SistemasDistribuidos/
+  774  ls
+  775  python3 grpcServer.py 
+  776  clear
+  777  python3 grpcServer.py 
+  778  code .
+  779  git status
+  780  code .
+  781  python3 greet_server.py 
+  782  git add .
+  783  git commit -m "Mosquitto updated"
+  784  history
+  785  history | grep xdpedrimbr
+  786  git push https://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@github.com/xdpedrimbr/SistemasDistribuidos.git
+  787  python3 mosquitto.py 
+  788  python3 mqttServer.py 
+  789  git status
+  790  git pull
+  791  code .
+  792  history > saida.txt

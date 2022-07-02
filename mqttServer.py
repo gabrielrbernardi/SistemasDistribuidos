@@ -13,7 +13,6 @@ def server():
     mqttClass = MqttClass()
     mqttc.on_message = mqttClass.on_message
     mqttc.connect("localhost", 1883, 60)
-    # m = mqttc.subscribe("content/#/#", 0)
 
     mqttc.subscribe("content/+/+", 0)
 

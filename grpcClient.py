@@ -13,19 +13,27 @@ class GrpcClient:
     def __init__(self, port):
         self.port = port
 
+    ######### Menu methods #########
+
     def portNumber():
+        flag = False
         while True:
-            print("\n" * 50)
+            if(flag == False):
+                print("\n" * 50)
             print("1 - 10000")
             print("2 - 10001")
             print("3 - 10002")
             print("4 - 10003")
-            choose = int(input("Digite a opcao de porta que sera inicializada: "))
+            try:
+                choose = int(input("Digite a opcao de porta que sera inicializada: "))
+                if choose > 4 or choose < 1:
+                    print("Porta invalida")
+                    flag = True
+                else:
+                    return choose
+            except:
+                raise Exception("Erro no input de configuração de porta")
 
-            if choose > 4 and choose < 1:
-                print("Porta invalida")
-            else:
-                return choose
     
     def userType(self):
         while True:
@@ -78,7 +86,7 @@ class GrpcClient:
         print(" 3 - Retornar tarefa especifica por ID")
         print(" 4 - Retornar todas tarefas de um usuario")
         print(" 5 - Atualizar tarefa")
-        print(" 6 - Remover usuario")
+        print(" 6 - Remover tarefa")
         print(" 7 - Enviar conteudo")
         print(" 8 - Menu anterior")
         print(" 9 - Finalizar client")
@@ -106,6 +114,7 @@ class GrpcClient:
         else:
             print("Opcao invalida")
 
+    ######### Input methods #########
 
     def fillUserData(self):
         nomeInput = input("Digite o nome: ")
@@ -125,23 +134,27 @@ class GrpcClient:
         return dictValues
 
     ######### Create methods #########
+
     def createUser(self):
-        id0 = 0
-        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
-            stub = grpc_pb2_grpc.TodoStub(channel)
-            
-            formatUserData = self.fillUserData()
-            dictValuesString = str(formatUserData)
-            
-            try:
-                response = stub.createItem(grpc_pb2.Item(id = id0, payload = dictValuesString))
-                id0 = response.id
-                print(f"\n\nRequisicao enviada. ID de acesso: {id0}")
-                time.sleep(0.001)
-            except KeyboardInterrupt: 
-                print("\nKeyboardInterrupt solicitada pelo usuario")
-                channel.unsubscribe(self.close)
-                exit()
+        try:
+            id0 = 0
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = grpc_pb2_grpc.TodoStub(channel)
+                
+                formatUserData = self.fillUserData()
+                dictValuesString = str(formatUserData)
+                
+                try:
+                    response = stub.createItem(grpc_pb2.Item(id = id0, payload = dictValuesString))
+                    id0 = response.id
+                    print(f"\n\nRequisicao enviada. ID de acesso: {id0}")
+                    time.sleep(0.001)
+                except KeyboardInterrupt: 
+                    print("\nKeyboardInterrupt solicitada pelo usuario")
+                    channel.unsubscribe(self.close)
+                    exit()
+        except:
+            print("Erro na criacao do usuario")
     
     def createTask(self):
         try:
@@ -160,22 +173,27 @@ class GrpcClient:
                 print("Requisicao enviada")
         except:
             print("Erro na criacao da tarefa")
+
     ######### Read methods #########
+
     def getUser(self, id0 = 0):
-        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
-            stub = grpc_pb2_grpc.TodoStub(channel)
+        try:
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = grpc_pb2_grpc.TodoStub(channel)
 
-            if not id0:
-                id0 = int(input("Digite o id do usuario: "))
+                if not id0:
+                    id0 = int(input("Digite o id do usuario: "))
 
-            message = grpc_pb2.getUserRequest(id=id0)
-            response = stub.getUser(message)
-            if response.id != 0:
-                print("Usuario buscado")
-                print(response)
-                return response
-            else:
-                print("Usuario nao encontrado")
+                message = grpc_pb2.getUserRequest(id=id0)
+                response = stub.getUser(message)
+                if response.id != 0:
+                    print("Usuario buscado")
+                    print(response)
+                    return response
+                else:
+                    print("Usuario nao encontrado")
+        except:
+            print("Erro no retorno do usuario")
 
     def getTask(self, id0 = 0, origin = 0):
         try:
@@ -193,11 +211,6 @@ class GrpcClient:
                     print(response)
         except:
             return ("Erro na busca da tarefa")
-                # if response.id != 0:
-                #     print("Tarefa buscada")
-                #     return response
-                # else:
-                #     print("Tarefa nao encontrada")
 
     def getUsers(self):
         try:
@@ -231,51 +244,59 @@ class GrpcClient:
                 response = stub.getTasksByUser(tasks_pb2.getAllTasksByUser(idUsuario = id0))
                 print(response)
         except:
-            print("Nao foi possivel retornar as tarefas!")
+           print("Nao foi possivel retornar as tarefas!")
     
     ######### Update method #########
+
     def updateUser(self):
-        idInput = int(input("Digite o ID do usuario a ser atualizado: "))
-        response = self.getUser(idInput)
-        if response:
-            print("\n\nUsuario encontrado")
-            print("Atualizando Usuario".center(50, "="))
-            
-            #Preenchendo valores para serem atualizados
-            formatUserData = self.fillUserData()
+        try:
+            idInput = int(input("Digite o ID do usuario a ser atualizado: "))
+            response = self.getUser(idInput)
+            if response:
+                print("\n\nUsuario encontrado")
+                print("Atualizando Usuario".center(50, "="))
+                
+                #Preenchendo valores para serem atualizados
+                formatUserData = self.fillUserData()
 
-            dictValuesString = str(formatUserData)
+                dictValuesString = str(formatUserData)
 
-            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
-                stub = grpc_pb2_grpc.TodoStub(channel)
+                with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                    stub = grpc_pb2_grpc.TodoStub(channel)
 
-                try:
-                    response = stub.updateUser(grpc_pb2.UpdateUserRequest(id = idInput, payload = dictValuesString))
-                    id0 = response.id
-                    print(f"\n\nRequisicao enviada. ID do usuario atualizado: {id0}")
-                    time.sleep(0.001)
-                except KeyboardInterrupt: 
-                    print("\nKeyboardInterrupt solicitada pelo usuario")
-                    channel.unsubscribe(self. close)
-                    exit()
+                    try:
+                        response = stub.updateUser(grpc_pb2.UpdateUserRequest(id = idInput, payload = dictValuesString))
+                        id0 = response.id
+                        print(f"\n\nRequisicao enviada. ID do usuario atualizado: {id0}")
+                        time.sleep(0.001)
+                    except KeyboardInterrupt: 
+                        print("\nKeyboardInterrupt solicitada pelo usuario")
+                        channel.unsubscribe(self. close)
+                        exit()
 
-        else:
-            print("Usuario nao encontrado")
+            else:
+                print("Usuario nao encontrado")
+        except:
+            print("Erro na atualizacao do usuario")
 
     def updateTask(self):
-        with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
-            stub = tasks_pb2_grpc.TasksStub(channel)
-            tempResponse = self.getTask(origin=1)
-            id = (tempResponse.tasks[0].id)
-            if (tempResponse != "Erro na busca da tarefa"):
-                taskData = str(self.fillTaskData(id = id))
-                print(id)
+        try:
+            with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
+                stub = tasks_pb2_grpc.TasksStub(channel)
+                tempResponse = self.getTask(origin=1)
+                id = (tempResponse.tasks[0].id)
+                if (tempResponse != "Erro na busca da tarefa"):
+                    taskData = str(self.fillTaskData(id = id))
+                    print(id)
 
-                response = stub.updateTask(tasks_pb2.UpdateTaskRequest(id = id, payload = taskData))
-                print(response)
+                    response = stub.updateTask(tasks_pb2.UpdateTaskRequest(id = id, payload = taskData))
+                    print(response)
+        except:
+            print("Erro na atualizaca da tarefa")
         
 
     ######### Delete method #########
+
     def deleteUser(self):
         idInput = int(input("Digite o ID do usuario a ser removido: "))
         response = self.getUser(idInput)
@@ -301,12 +322,12 @@ class GrpcClient:
 
         with grpc.insecure_channel(host + ":" + str(self.port)) as channel:
             stub = tasks_pb2_grpc.TasksStub(channel)
-            # try:    
-            response = stub.deleteSpecificTask(tasks_pb2.getTaskRequest(id = id))
-            print(response)
-            print(f"Tarefa com ID {id} removida")
-            # except:
-            #     print("Erro na exclusao")
+            try:    
+                response = stub.deleteSpecificTask(tasks_pb2.getTaskRequest(id = id))
+                print(response)
+                print(f"Tarefa com ID {id} removida")
+            except:
+                print("Erro na exclusao")
 
     ######### Sent contents PUB/SUB #########
     
@@ -337,51 +358,46 @@ class GrpcClient:
         print("Client conectando na porta " + str(self.port))
 
         # pid = os.getpid()
-        try:
-            tipoUsuario = self.userType()
-            if tipoUsuario == 1: #admin
-                while True:
-                    self.userActionAdmin()
-            else:
-                while True:
-                    self.userActionClient()
-        except KeyboardInterrupt: 
-            print("\nKeyboardInterrupt solicitada pelo usuario")
-            exit()
-        except grpc._channel._InactiveRpcError:
-            print("\n\nerro no grpc\n\n")
-            self.run()
-        except AttributeError:
-            print("AttributeError: Atributo inexistente e/ou incorreto")
-        except grpc.RpcError as e:
-            print("Erro na Conexao do gRPC")
-            print(e.code())
-            print(e.details())
-        except Exception:
-            print("Erro na execucao do programa!")
-        except:
-            print("Erro generico!")
-
+        tipoUsuario = self.userType()
+        if tipoUsuario == 1: #admin
+            while True:
+                self.userActionAdmin()
+        else:
+            while True:
+                self.userActionClient()
+    
     def close(channel):
         "close the channel"
         channel.close()
 
 if __name__ == "__main__":
-            
-    portInput = GrpcClient.portNumber()
-    availablePorts = [10000, 10001, 10002, 10003]
-    tempPort = 0
+    try:
+        portInput = GrpcClient.portNumber()
+        availablePorts = [10000, 10001, 10002, 10003]
+        tempPort = 0
 
-    if portInput == 1:
-        tempPort = availablePorts[0]
-    elif portInput == 2:
-        tempPort = availablePorts[1]
-    elif portInput == 3:
-        tempPort = availablePorts[2]
-    elif portInput == 4:
-        tempPort = availablePorts[3]
+        if portInput == 1:
+            tempPort = availablePorts[0]
+        elif portInput == 2:
+            tempPort = availablePorts[1]
+        elif portInput == 3:
+            tempPort = availablePorts[2]
+        elif portInput == 4:
+            tempPort = availablePorts[3]
 
-    # port = int(input("Digite a porta de conexao"))
-    # gc = GrpcClient(port)
-    gc = GrpcClient(tempPort)
-    gc.run()
+        gc = GrpcClient(tempPort)
+        gc.run()
+
+    except KeyboardInterrupt: 
+        print("\nKeyboardInterrupt solicitada pelo usuario")
+        exit()
+    except AttributeError:
+        print("AttributeError: Atributo inexistente e/ou incorreto")
+    except grpc.RpcError as e:
+        print("Erro na Conexao do gRPC")
+        print(e.code())
+        print(e.details())
+    except Exception as err:
+        print(str(err) + "\nErro na execucao do programa!")
+    except:
+        print("Erro generico!")
