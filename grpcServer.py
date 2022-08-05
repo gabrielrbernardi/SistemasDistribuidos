@@ -5,6 +5,7 @@ import threading
 
 import grpc_pb2
 import grpc_pb2_grpc
+from pySync01 import MyCounter
 import tasks_pb2
 import tasks_pb2_grpc
 
@@ -20,10 +21,18 @@ class Server(grpc_pb2_grpc.TodoServicer):
     def __init__(self):
         self.id = 0
         self.lastPrintTime = time.time()
+        self.instancia = MyCounter()
+        self.instancia.initServer()
 
     def createItem(self, request, _):
         self.id += 1
         cacheValues[self.id] = request.payload
+
+        f = open("arq.txt", "w")
+        f.write(cacheValues)
+        print(cacheValues)
+        f.close()
+        # self.instancia.insertKV(self.id, request.payload)
 
         return grpc_pb2.Items(id=self.id, payload = request.payload)
 
